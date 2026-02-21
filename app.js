@@ -4,98 +4,65 @@ let midiOutput = null;
 // Variable to store the original text of the MIDI status element
 let originalMidiStatusText = '';
 
-// --- MIDI CC numbers for parameters ---
+// --- MIDI CC numbers for parameters (JT Mini) ---
 
 // Global / Modulation
 const CC_MODULATION = 1;
-const CC_PORTAMENTO_TIME = 5;
 
-// Oscillator (OSC)
-const CC_OSC_BALANCE = 29;
-const CC_OSC1_WAVE = 24;
-const CC_OSC2_WAVE = 25;
-const CC_OSC1_COARSE = 115;
-const CC_OSC2_COARSE = 116;
-const CC_OSC1_FINE = 111;
-const CC_OSC2_FINE = 112;
-const CC_OSC1_PWM_DETUNE = 113; // PWM/Supersaw Detune/FM Feedback
-const CC_OSC2_PWM = 114;
+// VCO (Voltage Controlled Oscillator)
+const CC_VCO_PWM_MODULATION = 36;
+const CC_VCO_DETUNE = 42;
+const CC_VCO_PITCH_MODULATION = 47;
+
+// LFO (Low Frequency Oscillator)
+const CC_LFO_DELAY_TIME = 37;
+const CC_LFO_RATE = 46;
+
+// Voice and Octave Controls
+const CC_VOICE_MODE = 40;
+const CC_OCTAVE = 41;
 
 // Filter (VCF)
-const CC_VCF_CUTOFF = 74;
-const CC_VCF_RESONANCE = 71;
-const CC_VCF_ENV_AMOUNT = 47; 
-const CC_VCF_ATTACK = 85;
-const CC_VCF_DECAY = 86;
-const CC_VCF_SUSTAIN = 87;
-const CC_VCF_RELEASE = 88;
+const CC_VCF_CUTOFF = 44;
+const CC_VCF_ENVELOPE_MODULATION = 45;
+const CC_VCF_LFO_MODULATION = 48;
 
-// Amplifier (VCA)
-const CC_VCA_ATTACK = 81;
-const CC_VCA_DECAY = 82;
-const CC_VCA_SUSTAIN = 83;
-const CC_VCA_RELEASE = 84;
+// Envelope (ADSR)
+const CC_ENVELOPE_ATTACK = 49;
+const CC_ENVELOPE_DECAY = 50;
+const CC_ENVELOPE_SUSTAIN = 51;
+const CC_ENVELOPE_RELEASE = 39;
+const CC_ENVELOPE_RELEASE_LEVEL = 52;
 
-// LFO
-const CC_LFO1_AMOUNT = 70;
-const CC_LFO2_AMOUNT = 28;
-const CC_LFO1_RATE = 72;
-const CC_LFO2_RATE = 73;
-const CC_LFO1_WAVE = 54;
-const CC_LFO2_WAVE = 55;
-const CC_LFO1_DEST = 56;
-
-// Ring Modulation
-const CC_RING_MOD_AMT = 95;
-const CC_RING_MOD_ONOFF = 96;
-
-// --- INIT PATCH DEFAULTS ------ INIT PATCH DEFAULTS (Used by Init and Random functions) ---
+// --- INIT PATCH DEFAULTS (Used by Init and Random functions) ---
 const ALL_PATCH_CONTROLS = [
     // Global / Modulation
-    { id: 'mod-wheel', cc: CC_MODULATION, value: 0 },
-    { id: 'portamento-time', cc: CC_PORTAMENTO_TIME, value: 0 },
+    { id: 'modulation', cc: CC_MODULATION, value: 0 },
 
-    // Oscillator
-    { id: 'osc-balance', cc: CC_OSC_BALANCE, value: 64 }, // Center
-    { id: 'osc1-wave', cc: CC_OSC1_WAVE, value: 18 },
-    { id: 'osc2-wave', cc: CC_OSC2_WAVE, value: 21 },
-    { id: 'osc1-coarse', cc: CC_OSC1_COARSE, value: 64 }, // Center
-    { id: 'osc2-coarse', cc: CC_OSC2_COARSE, value: 64 }, // Center
-    { id: 'osc1-fine', cc: CC_OSC1_FINE, value: 64 }, // Center
-    { id: 'osc2-fine', cc: CC_OSC2_FINE, value: 64 }, // Center
-    { id: 'osc1-pwm-detune', cc: CC_OSC1_PWM_DETUNE, value: 0 },
-    { id: 'osc2-pwm', cc: CC_OSC2_PWM, value: 0 },
+    // VCO (Voltage Controlled Oscillator)
+    { id: 'vco-pwm-modulation', cc: CC_VCO_PWM_MODULATION, value: 0 },
+    { id: 'vco-detune', cc: CC_VCO_DETUNE, value: 64 }, // Center
+    { id: 'vco-pitch-modulation', cc: CC_VCO_PITCH_MODULATION, value: 0 },
 
-    // Ring Modulation
-    { id: 'ring-mod-amount', cc: CC_RING_MOD_AMT, value: 0 },
-    // Checkbox: value 0 (unchecked) sends 0
-    { id: 'ring-mod-onoff', cc: CC_RING_MOD_ONOFF, value: 0, isCheckbox: true }, 
+    // LFO (Low Frequency Oscillator)
+    { id: 'lfo-delay-time', cc: CC_LFO_DELAY_TIME, value: 0 },
+    { id: 'lfo-rate', cc: CC_LFO_RATE, value: 64 }, // Center
 
-    // LFO
-    { id: 'lfo1-amount', cc: CC_LFO1_AMOUNT, value: 0 },
-    { id: 'lfo2-amount', cc: CC_LFO2_AMOUNT, value: 0 },
-    { id: 'lfo1-rate', cc: CC_LFO1_RATE, value: 64 }, // Center
-    { id: 'lfo2-rate', cc: CC_LFO2_RATE, value: 64 }, // Center
-    { id: 'lfo1-wave', cc: CC_LFO1_WAVE, value: 0 },
-    { id: 'lfo2-wave', cc: CC_LFO2_WAVE, value: 0 },
-    { id: 'lfo1-dest', cc: CC_LFO1_DEST, value: 0 },
+    // Voice and Octave Controls
+    { id: 'voice-mode', cc: CC_VOICE_MODE, value: 6 }, // Voice Mode Poly (0-12 range)
+    { id: 'octave', cc: CC_OCTAVE, value: 54 }, // Octave 8' (44-65 range)
 
-    // Filter Main
+    // Filter (VCF)
     { id: 'vcf-cutoff', cc: CC_VCF_CUTOFF, value: 80 },
-    { id: 'vcf-resonance', cc: CC_VCF_RESONANCE, value: 10 },
-    { id: 'vcf-env-amount', cc: CC_VCF_ENV_AMOUNT, value: 64 }, // Center
+    { id: 'vcf-envelope-modulation', cc: CC_VCF_ENVELOPE_MODULATION, value: 64 }, // Center
+    { id: 'vcf-lfo-modulation', cc: CC_VCF_LFO_MODULATION, value: 0 },
 
-    // VCF Envelope (ADSR)
-    { id: 'vcf-attack', cc: CC_VCF_ATTACK, value: 0 },
-    { id: 'vcf-decay', cc: CC_VCF_DECAY, value: 0 },
-    { id: 'vcf-sustain', cc: CC_VCF_SUSTAIN, value: 127},
-    { id: 'vcf-release', cc: CC_VCF_RELEASE, value: 0 },
-    
-    // VCA Envelope (ADSR)
-    { id: 'vca-attack', cc: CC_VCA_ATTACK, value: 0 },
-    { id: 'vca-decay', cc: CC_VCA_DECAY, value: 0 }, // Mid-range decay
-    { id: 'vca-sustain', cc: CC_VCA_SUSTAIN, value: 127 }, // Full sustain (gate open)
-    { id: 'vca-release', cc: CC_VCA_RELEASE, value: 0 }
+    // Envelope (ADSR)
+    { id: 'envelope-attack', cc: CC_ENVELOPE_ATTACK, value: 0 },
+    { id: 'envelope-decay', cc: CC_ENVELOPE_DECAY, value: 0 },
+    { id: 'envelope-sustain', cc: CC_ENVELOPE_SUSTAIN, value: 127 },
+    { id: 'envelope-release', cc: CC_ENVELOPE_RELEASE, value: 0 },
+    { id: 'envelope-release-level', cc: CC_ENVELOPE_RELEASE_LEVEL, value: 0 }
 ];
 
 // --- Random number generator: Get a random integer between min (inclusive) and max (inclusive)
@@ -109,17 +76,13 @@ function getRandomInt(min, max) {
 function initPatch() {
     console.log("Initializing patch...");
 
-    // Flag to track if the OSC wave controls were found and processed
-    let osc1WaveValue = null;
-    let osc2WaveValue = null;
-
     ALL_PATCH_CONTROLS.forEach(param => {
         const element = document.getElementById(param.id);
         if (element) {
             let midiValue = param.value;
             
             if (param.isCheckbox) {
-                // For Checkboxes (like Ring Mod ON/OFF), 0 is off (false)
+                // For Checkboxes, 0 is off (false)
                 element.checked = (param.value === 127);
             } else {
                 // For Sliders
@@ -128,45 +91,13 @@ function initPatch() {
             
             // Send the MIDI CC message
             sendMidiCC(param.cc, midiValue);
-
-            if (param.cc === CC_OSC1_WAVE) {
-                osc1WaveValue = midiValue;
-            }
-            if (param.cc === CC_OSC2_WAVE) {
-                osc2WaveValue = midiValue;
-            }
-
-            // --- Console log LFO 1 Waveform Name on Init ---
-            if (param.cc === CC_LFO1_WAVE) {
-                const waveformName = getLfo1WaveformName(midiValue);
-                console.log(waveformName);
-            }
-
-            if (param.cc === CC_LFO2_WAVE) {
-                const waveformName = getLfo2WaveformName(midiValue);
-                console.log(waveformName);
-            }
-
-            // Console log LFO 1 Destination Name on Init ---
-            if (param.cc === CC_LFO1_DEST) {
-                const destName = getLfo1DestinationName(midiValue);
-                console.log(destName);
-            }
         }
     });
 
-    // --- NEW: Manually update the visual state of the labels after all MIDI is sent ---
-    // This ensures the labels are correctly set to the default patch values (18 and 21)
-    if (osc1WaveValue !== null) {
-        updateOsc1PwmDetuneFmState(osc1WaveValue);
-    }
-    if (osc2WaveValue !== null) {
-        updateOsc2PwmLabelState(osc2WaveValue);
-    }
-    // console.log("Patch initialized and MIDI messages sent.");
+    console.log("Patch initialized and MIDI messages sent.");
 }
 
-// --- RANDOM PATCH FUNCTION (NEW) ---
+// --- RANDOM PATCH FUNCTION ---
 function randomPatch() {
     console.log("Generating random patch...");
     ALL_PATCH_CONTROLS.forEach(param => {
@@ -175,14 +106,11 @@ function randomPatch() {
             let minValue = 0; // Default min
             let maxValue = 127; // Default max
             
-            // Note: For simplicity, min/max for all inputs are 0/127 in index.html,
-            // so we don't strictly need to read them from the element here.
-
             let randomValue;
             let midiValue;
             
             if (param.isCheckbox) {
-                // Randomly set Ring Mod On/Off (0 or 127)
+                // Randomly set checkbox On/Off (0 or 127)
                 // 1 in 3 chance of being ON (127)
                 randomValue = getRandomInt(0, 2) === 2 ? 127 : 0;
                 element.checked = (randomValue === 127);
@@ -195,116 +123,10 @@ function randomPatch() {
             }
             
             sendMidiCC(param.cc, midiValue);
-
-            // --- NEW: Update specific label status after setting value ---
-            if (param.cc === CC_OSC2_WAVE) {
-                updateOsc2PwmLabelState(midiValue);
-            }
-            if (param.cc === CC_OSC1_WAVE) {
-                updateOsc1PwmDetuneFmState(midiValue);
-            }
-
-            // --- NEW: Console log LFO 1 Waveform Name on Random ---
-            if (param.cc === CC_LFO1_WAVE) {
-                const waveformName = getLfo1WaveformName(midiValue);
-                console.log(waveformName);
-            }
-
-            if (param.cc === CC_LFO2_WAVE) {
-                const waveformName = getLfo2WaveformName(midiValue);
-                console.log(waveformName);
-            }
-
-            // --- NEW: Console log LFO 1 Destination Name on Random ---
-            if (param.cc === CC_LFO1_DEST) {
-                const destName = getLfo1DestinationName(midiValue);
-                console.log(destName);
-            }
         }
     });
     console.log("Random patch generated and MIDI messages sent.");
 }
-
-// --- WAVEFORM NAME HELPER (NEW) ---
-function getOsc1WaveformName(value) {
-    if (value >= 0 && value <= 17) return 'OSC 1: OFF';
-    if (value >= 18 && value <= 35) return 'OSC 1: TRI';
-    if (value >= 36 && value <= 53) return 'OSC 1: SQR';
-    if (value >= 54 && value <= 71) return 'OSC 1: PWM';
-    if (value >= 72 && value <= 89) return 'OSC 1: SAW';
-    if (value >= 90 && value <= 107) return 'OSC 1: SUPERSAW';
-    if (value >= 108 && value <= 125) return 'OSC 1: FM';
-    if (value >= 126 && value <= 127) return 'OSC 1: NOISE';
-    return 'OSC 1: Unknown Waveform';
-}
-
-// --- WAVEFORM NAME HELPER for OSC 2 (NEW) ---
-function getOsc2WaveformName(value) {
-    if (value >= 0 && value <= 20) return 'OSC 2: OFF';
-    if (value >= 21 && value <= 41) return 'OSC 2: TRI';
-    if (value >= 42 && value <= 62) return 'OSC 2: SQR';
-    if (value >= 63 && value <= 83) return 'OSC 2: PWM';
-    if (value >= 84 && value <= 104) return 'OSC 2: SAW';
-    if (value >= 105 && value <= 127) return 'OSC 2: NOISE';
-    return 'OSC 2: Unknown Waveform';
-}
-
-// --- NEW HELPER FUNCTION: Update OSC 2 PWM Label State ---
-function updateOsc2PwmLabelState(osc2WaveValue) {
-    const osc2PwmLabel = document.querySelector('label[for="osc2-pwm"]');
-    if (osc2PwmLabel) {
-        // The PWM range is 63 to 83 (inclusive)
-        if (osc2WaveValue >= 63 && osc2WaveValue <= 83) {
-            osc2PwmLabel.classList.add('active-control');
-        } else {
-            // Remove the class when outside the range
-            osc2PwmLabel.classList.remove('active-control');
-        }
-    }
-}
-
-// --- NEW HELPER FUNCTION: Update OSC 1 PWM/Detune/FM Label State ---
-function updateOsc1PwmDetuneFmState(osc1WaveValue) {
-    // Determine the current waveform name (e.g., 'OSC 1: PWM')
-    const waveformName = getOsc1WaveformName(osc1WaveValue);
-
-    // Select the three label spans using the IDs created in index.html
-    const pwmSpan = document.getElementById('osc1-pwm-label');
-    const detuneSpan = document.getElementById('osc1-detune-label');
-    const fmSpan = document.getElementById('osc1-fm-label');
-
-    // Create an array of all spans for easy reset
-    const allSpans = [pwmSpan, detuneSpan, fmSpan].filter(e => e); 
-
-    // 1. Reset: Remove the active-control class from all spans first
-    allSpans.forEach(span => span.classList.remove('active-control'));
-
-    // 2. Apply: Add the class to the specific span based on the waveform
-    if (waveformName === 'OSC 1: PWM' && pwmSpan) {
-        pwmSpan.classList.add('active-control');
-    } else if (waveformName === 'OSC 1: SUPERSAW' && detuneSpan) {
-        detuneSpan.classList.add('active-control');
-    } else if (waveformName === 'OSC 1: FM' && fmSpan) {
-        fmSpan.classList.add('active-control');
-    }
-}
-
-// --- LFO 1 WAVEFORM NAME HELPER ---
-function getLfo1WaveformName(value) {
-    if (value >= 0 && value <= 63) return 'LFO 1 WAVE: TRI';
-    if (value >= 64 && value <= 126) return 'LFO 1 WAVE: SQR';
-    if (value === 127) return 'LFO 1 WAVE: SAWT';
-    return 'LFO 1 WAVE: Unknown Waveform';
-}
-
-// --- LFO 2 WAVEFORM NAME HELPER ---
-function getLfo2WaveformName(value) {
-    if (value >= 0 && value <= 63) return 'LFO 2 WAVE: TRI';
-    if (value >= 64 && value <= 126) return 'LFO 2 WAVE: SQR';
-    if (value === 127) return 'LFO 2 WAVE: SAWT';
-    return 'LFO 2 WAVE: Unknown Waveform';
-}
-
 
 // --- INITIALIZATION ---
 if (navigator.requestMIDIAccess) {
@@ -320,14 +142,6 @@ function onMIDIFailure() {
         statusElement.textContent = 'ERROR: Could not access MIDI devices.';
         statusElement.style.color = 'red';
     }
-}
-
-// --- LFO 1 DESTINATION NAME HELPER ---
-function getLfo1DestinationName(value) {
-    // Assuming the user meant LFO 1 DEST: VCF and LFO 1 DEST: SAWT
-    if (value >= 0 && value <= 63) return 'LFO 1 DEST: VCF';
-    if (value >= 64 && value <= 127) return 'LFO 1 DEST: SAWT';
-    return 'LFO 1 DEST: Unknown Destination';
 }
 
 // --- SUCCESS HANDLER (MAIN LOGIC) ---
@@ -361,13 +175,6 @@ function onMIDISuccess(midiAccess) {
     const attachSliderListener = (ccNumber, elementId) => {
         const slider = document.getElementById(elementId);
         const statusElement = document.getElementById('midi-output-select');
-        // if (slider) {
-        //     slider.addEventListener('input', (event) => {
-        //         const ccValue = parseInt(event.target.value);
-        //         sendMidiCC(ccNumber, ccValue);
-
-        //         // console.log(`CC ${ccNumber} (${elementId}): Value ${ccValue}`);
-        //     });
         if (slider && statusElement) {
             // 1. Find the associated label text. 
             const labelElement = document.querySelector(`label[for="${elementId}"]`);
@@ -404,239 +211,32 @@ function onMIDISuccess(midiAccess) {
     };
     
     // Global / Modulation
-    attachSliderListener(CC_MODULATION, 'mod-wheel');
-    attachSliderListener(CC_PORTAMENTO_TIME, 'portamento-time');
+    attachSliderListener(CC_MODULATION, 'modulation');
 
-    // Oscillator
-    attachSliderListener(CC_OSC_BALANCE, 'osc-balance');
-    // attachSliderListener(CC_OSC1_WAVE, 'osc1-wave'); // Removed this generic call
-    // attachSliderListener(CC_OSC2_WAVE, 'osc2-wave');
-    attachSliderListener(CC_OSC1_COARSE, 'osc1-coarse');
-    attachSliderListener(CC_OSC2_COARSE, 'osc2-coarse');
-    attachSliderListener(CC_OSC1_FINE, 'osc1-fine');
-    attachSliderListener(CC_OSC2_FINE, 'osc2-fine');
-    attachSliderListener(CC_OSC1_PWM_DETUNE, 'osc1-pwm-detune');
-    attachSliderListener(CC_OSC2_PWM, 'osc2-pwm');
+    // VCO (Voltage Controlled Oscillator)
+    attachSliderListener(CC_VCO_PWM_MODULATION, 'vco-pwm-modulation');
+    attachSliderListener(CC_VCO_DETUNE, 'vco-detune');
+    attachSliderListener(CC_VCO_PITCH_MODULATION, 'vco-pitch-modulation');
 
-    // --- CUSTOM LISTENER FOR OSC 1 WAVEFORM ---
-    const osc1WaveSlider = document.getElementById('osc1-wave');
-    const statusElement = document.getElementById('midi-output-select');
+    // LFO (Low Frequency Oscillator)
+    attachSliderListener(CC_LFO_DELAY_TIME, 'lfo-delay-time');
+    attachSliderListener(CC_LFO_RATE, 'lfo-rate');
 
-    if (osc1WaveSlider && statusElement) {
-        
-        // 1. Mouse Down: Store the original status text and clear it
-        osc1WaveSlider.addEventListener('mousedown', () => {
-            // Save the current status text (which will be the selected device name)
-            originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
-            
-            // Clear the select box text display
-            statusElement.options[statusElement.selectedIndex].textContent = ''; 
-        });
+    // Voice and Octave Controls
+    attachSliderListener(CC_VOICE_MODE, 'voice-mode');
+    attachSliderListener(CC_OCTAVE, 'octave');
 
-        // 2. Input: Send MIDI and update the select box text with the waveform name
-        osc1WaveSlider.addEventListener('input', (event) => {
-            const ccValue = parseInt(event.target.value);
-            sendMidiCC(CC_OSC1_WAVE, ccValue);
-            
-            const waveformName = getOsc1WaveformName(ccValue);
-            console.log(waveformName);
-
-            // Temporarily display the waveform name in the select box
-            statusElement.options[statusElement.selectedIndex].textContent = waveformName;
-
-            updateOsc1PwmDetuneFmState(ccValue); // update and underline text
-        });
-
-        // 3. Mouse Up: Restore the original status text
-        osc1WaveSlider.addEventListener('mouseup', () => {
-            // Restore the original status text (the device name)
-            statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
-        });
-    }
-    // --- END CUSTOM LISTENER FOR OSC 1 ---
-
-    // --- CUSTOM LISTENER FOR OSC 2 WAVEFORM (NEW BLOCK) ---
-    const osc2WaveSlider = document.getElementById('osc2-wave');
-    const osc2PwmLabel = document.querySelector('label[for="osc2-pwm"]'); // to underline osc 2 pwm twxt
-
-    if (osc2WaveSlider && statusElement) {
-        
-        // 1. Mouse Down: Store the original status text and clear it
-        osc2WaveSlider.addEventListener('mousedown', () => {
-            // Re-save the current status text just in case osc1 was the last one used
-            originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
-            
-            // Clear the select box text display
-            statusElement.options[statusElement.selectedIndex].textContent = ''; 
-        });
-
-        // 2. Input: Send MIDI and update the select box text with the waveform name
-        osc2WaveSlider.addEventListener('input', (event) => {
-            const ccValue = parseInt(event.target.value);
-            sendMidiCC(CC_OSC2_WAVE, ccValue);
-            
-            const waveformName = getOsc2WaveformName(ccValue);
-            console.log(waveformName);
-
-            // Temporarily display the waveform name in the select box
-            statusElement.options[statusElement.selectedIndex].textContent = waveformName;
-
-            // --- UPDATED: Use the new helper function ---
-            updateOsc2PwmLabelState(ccValue);
-
-            // --- OSC 2 PWM DYNAMIC STYLING LOGIC ---
-            if (osc2PwmLabel) {
-                // The PWM range is 63 to 83 (inclusive)
-                if (ccValue >= 63 && ccValue <= 83) {
-                    // Add the class to underline the label
-                    osc2PwmLabel.classList.add('active-control');
-                } else {
-                    // Remove the class when outside the range
-                    osc2PwmLabel.classList.remove('active-control');
-                }
-            }
-        });
-
-        // 3. Mouse Up: Restore the original status text
-        osc2WaveSlider.addEventListener('mouseup', () => {
-            // Restore the original status text (the device name)
-            statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
-        });
-    }
-    // --- END CUSTOM LISTENER FOR OSC 2 ---
-
-    // Filter Main
+    // Filter (VCF)
     attachSliderListener(CC_VCF_CUTOFF, 'vcf-cutoff');
-    attachSliderListener(CC_VCF_RESONANCE, 'vcf-resonance');
-    attachSliderListener(CC_VCF_ENV_AMOUNT, 'vcf-env-amount');
+    attachSliderListener(CC_VCF_ENVELOPE_MODULATION, 'vcf-envelope-modulation');
+    attachSliderListener(CC_VCF_LFO_MODULATION, 'vcf-lfo-modulation');
 
-    // VCF Envelope
-    attachSliderListener(CC_VCF_ATTACK, 'vcf-attack');
-    attachSliderListener(CC_VCF_DECAY, 'vcf-decay');
-    attachSliderListener(CC_VCF_SUSTAIN, 'vcf-sustain');
-    attachSliderListener(CC_VCF_RELEASE, 'vcf-release');
-    
-    // VCA Envelope
-    attachSliderListener(CC_VCA_ATTACK, 'vca-attack');
-    attachSliderListener(CC_VCA_DECAY, 'vca-decay');
-    attachSliderListener(CC_VCA_SUSTAIN, 'vca-sustain');
-    attachSliderListener(CC_VCA_RELEASE, 'vca-release');
-
-    // LFO
-    attachSliderListener(CC_LFO1_AMOUNT, 'lfo1-amount');
-    attachSliderListener(CC_LFO2_AMOUNT, 'lfo2-amount');
-    attachSliderListener(CC_LFO1_RATE, 'lfo1-rate');
-    attachSliderListener(CC_LFO2_RATE, 'lfo2-rate');
-    // attachSliderListener(CC_LFO1_WAVE, 'lfo1-wave');
-
-    // --- CUSTOM LISTENER FOR LFO 1 WAVEFORM ---
-    const lfo1WaveSlider = document.getElementById('lfo1-wave');
-    // statusElement is already defined near the OSC listeners
-
-    if (lfo1WaveSlider && statusElement) {
-        
-        // 1. Mouse Down: Store the original status text and clear it
-        lfo1WaveSlider.addEventListener('mousedown', () => {
-            // Re-save the current status text just in case another control was the last one used
-            originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
-            
-            // Clear the select box text display
-            statusElement.options[statusElement.selectedIndex].textContent = ''; 
-        });
-
-        // 2. Input: Send MIDI, console.log, and update the select box text
-        lfo1WaveSlider.addEventListener('input', (event) => {
-            const ccValue = parseInt(event.target.value);
-            sendMidiCC(CC_LFO1_WAVE, ccValue);
-            
-            const waveformName = getLfo1WaveformName(ccValue);
-            console.log(waveformName);
-
-            // Temporarily display the waveform name in the select box
-            statusElement.options[statusElement.selectedIndex].textContent = waveformName;
-        });
-
-        // 3. Mouse Up: Restore the original status text
-        lfo1WaveSlider.addEventListener('mouseup', () => {
-            // Restore the original status text (the device name)
-            statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
-        });
-    }
-    // --- END CUSTOM LISTENER FOR LFO 1 WAVEFORM ---
-
-    // attachSliderListener(CC_LFO2_WAVE, 'lfo2-wave');
-
-    // --- CUSTOM LISTENER FOR LFO 2 WAVEFORM (NEW BLOCK) ---
-    const lfo2WaveSlider = document.getElementById('lfo2-wave');
-    
-    if (lfo2WaveSlider && statusElement) {
-        
-        lfo2WaveSlider.addEventListener('mousedown', () => {
-            originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
-            statusElement.options[statusElement.selectedIndex].textContent = ''; 
-        });
-
-        lfo2WaveSlider.addEventListener('input', (event) => {
-            const ccValue = parseInt(event.target.value);
-            sendMidiCC(CC_LFO2_WAVE, ccValue);
-            
-            const waveformName = getLfo2WaveformName(ccValue);
-            console.log(waveformName);
-
-            statusElement.options[statusElement.selectedIndex].textContent = waveformName;
-        });
-
-        lfo2WaveSlider.addEventListener('mouseup', () => {
-            statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
-        });
-    }
-
-
-    // attachSliderListener(CC_LFO1_DEST, 'lfo1-dest');
-
-    // --- CUSTOM LISTENER FOR LFO 1 DESTINATION (NEW BLOCK) ---
-    const lfo1DestSlider = document.getElementById('lfo1-dest');
-    // statusElement is already defined near the OSC listeners
-
-    if (lfo1DestSlider && statusElement) {
-        
-        // 1. Mouse Down: Store the original status text and clear it
-        lfo1DestSlider.addEventListener('mousedown', () => {
-            originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
-            statusElement.options[statusElement.selectedIndex].textContent = ''; 
-        });
-
-        // 2. Input: Send MIDI, console.log, and update the select box text
-        lfo1DestSlider.addEventListener('input', (event) => {
-            const ccValue = parseInt(event.target.value);
-            sendMidiCC(CC_LFO1_DEST, ccValue);
-            
-            const destName = getLfo1DestinationName(ccValue);
-            console.log(destName);
-
-            // Temporarily display the destination name in the select box
-            statusElement.options[statusElement.selectedIndex].textContent = destName;
-        });
-
-        // 3. Mouse Up: Restore the original status text
-        lfo1DestSlider.addEventListener('mouseup', () => {
-            statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
-        });
-    }
-    // --- END CUSTOM LISTENER FOR LFO 1 DESTINATION ---
-
-    // Ring Modulation Amount
-    attachSliderListener(CC_RING_MOD_AMT, 'ring-mod-amount');
-
-    // Ring Modulation ON/OFF (CC 96) - Special Checkbox Listener
-    const ringModOnOff = document.getElementById('ring-mod-onoff');
-    if (ringModOnOff) {
-        ringModOnOff.addEventListener('change', (event) => {
-            // Send 127 if checked (on), 0 if unchecked (off)
-            const ccValue = event.target.checked ? 127 : 0;
-            sendMidiCC(CC_RING_MOD_ONOFF, ccValue);
-        });
-    }
+    // Envelope (ADSR)
+    attachSliderListener(CC_ENVELOPE_ATTACK, 'envelope-attack');
+    attachSliderListener(CC_ENVELOPE_DECAY, 'envelope-decay');
+    attachSliderListener(CC_ENVELOPE_SUSTAIN, 'envelope-sustain');
+    attachSliderListener(CC_ENVELOPE_RELEASE, 'envelope-release');
+    attachSliderListener(CC_ENVELOPE_RELEASE_LEVEL, 'envelope-release-level');
 }
 
 // --- HELPER FUNCTION: POPULATE DROPDOWN ---
@@ -658,11 +258,11 @@ function populateOutputDevices(midiAccess) {
     let foundSelection = false;
     let autoSelectId = null;
 
-    // First pass: Find if a previous selection or the JT-4000M exists
+    // First pass: Find if a previous selection or the JT Mini exists
     midiAccess.outputs.forEach((output) => {
         if (output.id === currentId) {
             autoSelectId = output.id;
-        } else if (output.name.includes("JT-4000M")) {
+        } else if (output.name.includes("JT Mini")) {
             autoSelectId = output.id;
         }
     });
@@ -732,7 +332,7 @@ closeBtn.addEventListener('click', (e) => {
 // About Alert
 aboutBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    alert('JT4000M MIDI Editor\nVersion 1.0\nCreated for Behringer JT-4000M Micro Synthesizer');
+    alert('JT Mini MIDI Editor\nVersion 1.0\nCreated for Behringer JT Mini Synthesizer');
 });
 
 // Close menu if clicking anywhere outside the side-nav
