@@ -284,7 +284,7 @@ p {
 /* SLIDER STYLING */
 input[type="range"] {
     width: 90px; 
-    accent-color: #FE6030; 
+    accent-color: #fc6d41; 
 }
 
 
@@ -376,7 +376,7 @@ input[type="range"] {
 
 /* Style for the buttons themselves */
 #init-patch-button, #random-patch-button {
-    background-color: #FE6030;
+    background-color: #fd9934;
     color: #ebe1d7;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
@@ -389,7 +389,7 @@ input[type="range"] {
 }
 
 #init-patch-button:hover, #random-patch-button:hover {
-    background-color: #bb4d2c; 
+    background-color: #d67412; 
 }
 
 /* New style to highlight the active OSC2 PWM control */

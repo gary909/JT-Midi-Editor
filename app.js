@@ -32,7 +32,6 @@ const CC_ENVELOPE_ATTACK = 49;
 const CC_ENVELOPE_DECAY = 50;
 const CC_ENVELOPE_SUSTAIN = 51;
 const CC_ENVELOPE_RELEASE = 39;
-const CC_ENVELOPE_RELEASE_LEVEL = 52;
 
 // --- INIT PATCH DEFAULTS (Used by Init and Random functions) ---
 const ALL_PATCH_CONTROLS = [
@@ -61,8 +60,7 @@ const ALL_PATCH_CONTROLS = [
     { id: 'envelope-attack', cc: CC_ENVELOPE_ATTACK, value: 0 },
     { id: 'envelope-decay', cc: CC_ENVELOPE_DECAY, value: 0 },
     { id: 'envelope-sustain', cc: CC_ENVELOPE_SUSTAIN, value: 127 },
-    { id: 'envelope-release', cc: CC_ENVELOPE_RELEASE, value: 0 },
-    { id: 'envelope-release-level', cc: CC_ENVELOPE_RELEASE_LEVEL, value: 0 }
+    { id: 'envelope-release', cc: CC_ENVELOPE_RELEASE, value: 0 }
 ];
 
 // --- Random number generator: Get a random integer between min (inclusive) and max (inclusive)
@@ -236,7 +234,6 @@ function onMIDISuccess(midiAccess) {
     attachSliderListener(CC_ENVELOPE_DECAY, 'envelope-decay');
     attachSliderListener(CC_ENVELOPE_SUSTAIN, 'envelope-sustain');
     attachSliderListener(CC_ENVELOPE_RELEASE, 'envelope-release');
-    attachSliderListener(CC_ENVELOPE_RELEASE_LEVEL, 'envelope-release-level');
 }
 
 // --- HELPER FUNCTION: POPULATE DROPDOWN ---
