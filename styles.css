@@ -3,7 +3,8 @@ html {
 }
 
 body {
-  background-color: #36436A;
+  /* background-color: #282727; */
+  background: linear-gradient(180deg, #3a3938 0%, #282727 100%);
   box-shadow: inset 0 0 25px 10px rgba(0, 0, 0, 0.4);
   min-height: 100vh;
   margin: 0;
@@ -21,7 +22,7 @@ h1 {
 }
 
 h2 {
-  color: #EBA85B;
+  color: #D4CABF;
   font-family: 'Orbitron', sans-serif;
   font-size: 37px;
   margin-top: 0;
@@ -29,7 +30,7 @@ h2 {
 }
 
 h3 {
-  color: #EBA85B;
+  color: #D4CABF;
   text-align: center;
 }
 
@@ -258,8 +259,8 @@ p {
 }
 
 .control-box {
-    background-color: #36436A;
-    border: 5px solid #313236;
+    background-color: #353433;
+    border: 3px solid #ebebf0;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
@@ -270,7 +271,7 @@ p {
 .control-box h3 {
     margin-top: 0;
     margin-bottom: 12px;
-    background-color: #313236;
+    background-color: #F84C26;
 }
 
 .parameter-row {
@@ -283,7 +284,7 @@ p {
 /* SLIDER STYLING */
 input[type="range"] {
     width: 90px; 
-    accent-color: #A64DBD; 
+    accent-color: #FE6030; 
 }
 
 
@@ -375,11 +376,11 @@ input[type="range"] {
 
 /* Style for the buttons themselves */
 #init-patch-button, #random-patch-button {
-    background-color: #313236;
+    background-color: #FE6030;
     color: #ebe1d7;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
-    border: 5px solid #313236; 
+    border: 2px solid #fcfcfc; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
     padding: 5px 10px;
     border-radius: 5px;
@@ -388,7 +389,7 @@ input[type="range"] {
 }
 
 #init-patch-button:hover, #random-patch-button:hover {
-    background-color: #925C07; 
+    background-color: #bb4d2c; 
 }
 
 /* New style to highlight the active OSC2 PWM control */
@@ -396,7 +397,7 @@ input[type="range"] {
     /* Apply underline */
     text-decoration: underline;
     /* You might also want to change the color for emphasis */
-    color: #EBA85B !important; 
+    color: #f3f3f3 !important; 
 }
 
 .wavs-diagram {
