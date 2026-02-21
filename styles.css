@@ -1,0 +1,492 @@
+html {
+  height: 100%;
+}
+
+body {
+  background-color: #36436A;
+  box-shadow: inset 0 0 25px 10px rgba(0, 0, 0, 0.4);
+  min-height: 100vh;
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  color: #D4CABF;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  margin-bottom: -10px;
+}
+
+h2 {
+  color: #EBA85B;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 37px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+h3 {
+  color: #EBA85B;
+  text-align: center;
+}
+
+label {
+  color: #ebe1d7;
+  font-size: 10px;
+}
+
+p {
+  color: #ebe1d7;
+}
+
+.side-nav a.linkText {
+    font-family: Helvetica, sans-serif;
+    color: #aaa;
+    font-size: 16px;
+    /* font-weight: ; */
+}
+
+/* ********** FOOTER DISCLAIMER STYLING ********** */
+#footer-disclaimer {
+  background-color: rgba(20, 20, 20, 0.7);
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  text-align: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#footer-disclaimer p {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-family: 'Orbitron', sans-serif;
+  color: #b7c0d3;
+}
+
+@media (max-width: 1200px) {
+  #footer-disclaimer {
+    position: relative;
+    margin: 10px auto 0;
+    margin-bottom: 5px;
+    transform: none;
+    left: auto;
+  }
+}
+
+@media (min-width: 1201px) {
+  #footer-disclaimer {
+    position: fixed;
+    bottom: 20px;
+    z-index: 999;
+  }
+}
+/* ********** END OF FOOTER DISCLAIMER STYLING ********** */
+
+.guideNote {
+  color: #b7c0d3 !important;
+}
+
+.nav-note {
+    padding: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.5;
+    justify-content: space-between;
+    /* border-top: 1px solid #333; */
+    /* margin-top: 20px; */
+}
+
+/* ********** HAMBURGER STYLING ******* */
+/* Hamburger Button */
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    right: 15px;
+    cursor: pointer;
+    z-index: 1001; /* Above everything, except for the slide nav*/
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: #EBA85B;
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+}
+
+.hamburger-menu:hover .bar {
+    background-color: #8e5a1d;
+    cursor: pointer;
+}
+
+/* Slide-out Panel */
+.side-nav {
+    height: 100%;
+    width: 0; /* Hidden by default */
+    position: fixed;
+    z-index: 1002;
+    top: 0;
+    right: 0;
+    background-color: #262B30;
+    overflow-x: hidden;
+    transition: 0.2s; /* Smooth slide effect */
+    padding-top: 60px;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+    color: white;
+}
+
+.side-nav a {
+    padding: 15px 10px 15px 15px; /* top right bottom left */
+    text-decoration: none;
+    font-size: 18px;
+    color: #aaa;
+    display: block;
+    font-family: 'Orbitron', sans-serif;
+    transition: 0.3s;
+    text-align: left;
+}
+
+.side-nav a:hover {
+    color: #EBA85B;
+}
+
+.side-nav .close-btn {
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    font-size: 36px;
+}
+
+.side-nav hr {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 20px;
+}
+
+.HambText {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* ********** END OF HAMBURGER STYLING ******* */
+
+
+/* ********** Start OF ACCORDION STYLING ********** */
+.accordion-header {
+
+    background-color: transparent;
+    color: #aaa;
+    cursor: pointer;
+    padding: 15px 25px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    border-bottom: 1px solid #333;
+}
+
+.accordion-header:hover, .active {
+    color: #EBA85B; /* Highlight color */
+}
+
+/* plus/minus icon */
+.accordion-header:after {
+    content: '\002B'; /* Plus sign */
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212"; /* Minus sign */
+}
+
+.accordion-content {
+    padding: 0 10px;
+    background-color: #222;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out; /* Smooth slide */
+}
+
+.accordion-content p {
+    font-size: 14px;
+    color: #eee;
+    line-height: 1.6;
+}
+
+/* ********** END OF ACCORDION STYLING ********** */
+
+#main-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center; 
+    max-width: 1280px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+#header-block {  /* The main title */
+    text-align: left;
+    margin-left: 10px;
+}
+
+#header-block, #header-spacer {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+#controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1280px;
+    padding: 10px;
+}
+
+.control-box {
+    background-color: #36436A;
+    border: 5px solid #313236;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    margin: 10px;
+}
+
+.control-box h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    background-color: #313236;
+}
+
+.parameter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+/* SLIDER STYLING */
+input[type="range"] {
+    width: 90px; 
+    accent-color: #A64DBD; 
+}
+
+
+/* --- Tooltip Styling --- */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width:max-content;
+    background-color: #201c13;
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 10;
+    bottom: 100%;
+    right: 100%;
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 0%;
+    left: -10%;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent #201c1300;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- End of Tooltip Styling --- */
+
+/* Styling for the MIDI output selection box */
+#midi-output-select {
+    width: 250px;
+    background-color: #514109;
+    color: #B3B953;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    border: 5px solid #313236;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Centering the MIDI device selection */
+#midi-status {
+    display: flex;
+    flex-direction: column; /* Stack the label and select box vertically */
+    align-items: center; /* Center the stacked items horizontally */
+    margin-top: 20px;
+}
+
+/* Add space below the label within the MIDI status block */
+#midi-status label {
+    margin-bottom: 8px;
+}
+
+#patch-controls {
+    display: flex;
+    gap: 15px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.patch-button-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.patch-button-group label {
+    margin-bottom: 8px;
+}
+
+/* Style for the buttons themselves */
+#init-patch-button, #random-patch-button {
+    background-color: #313236;
+    color: #ebe1d7;
+    font-family: 'VT323', monospace;
+    font-size: 1.2em;
+    border: 5px solid #313236; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+#init-patch-button:hover, #random-patch-button:hover {
+    background-color: #925C07; 
+}
+
+/* New style to highlight the active OSC2 PWM control */
+.active-control {
+    /* Apply underline */
+    text-decoration: underline;
+    /* You might also want to change the color for emphasis */
+    color: #EBA85B !important; 
+}
+
+.wavs-diagram {
+    display: block;      /* Required for margin: auto to work */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;        /* Makes the image span the width of the control box */
+    height: auto;       /* Maintains aspect ratio */
+    margin-bottom: 10px; /* Space between image and the "VCA EG" text */
+    border-radius: 4px; /* Optional: matches your box styling */
+    opacity: 0.9;       /* Optional: softens the image to match the UI */
+}
+
+.side-nav .wavs-diagram {
+    width: 70%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
+@media (max-width: 768px) {
+
+    /* Floating Screen bar */
+    #midi-status {
+        position: fixed; /* Makes it float relative to the viewport */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; 
+        
+        /* Compact/Horizontal layout */
+        display: flex; 
+        flex-direction: row; 
+        justify-content: center;
+        gap: 20px;
+        align-items: center;
+        
+        /* Appearance */
+        background-color: #36436A;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        padding: 10px 0; 
+        margin: 0;
+    }
+
+    /* Hide the MIDI device label on mobile to save space on the floating bar */
+    #midi-status label {
+        display: none;
+    }
+
+    body {
+        padding-top: 40px;
+    }
+    
+    /* 1. Stack the three main header sections vertically */
+    #main-header {
+        flex-direction: column;
+        /* Remove space-around and use flex-start for a tight stack, 
+           then center the content within the header */
+        justify-content: flex-start; 
+        align-items: center; /* Center the entire header block */
+        padding: 10px 0; /* Add some vertical padding */
+    }
+
+    /* 2. Ensure each block is full width (or nearly full) and centered */
+    #header-block,
+    /* #midi-status, */
+    #patch-controls {
+        width: 90%; /* Take up the full width of the main-header */
+        margin: 10px 0; /* Add vertical spacing between stacked elements */
+        text-align: center; /* Center text inside the header block */
+        
+        /* Optional: Center the button groups horizontally within their block */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* 3. Adjust specific inner elements to ensure they stack/center correctly */
+    
+    /* Center the buttons within the patch-controls group */
+    #patch-controls {
+        flex-direction: row;
+        gap: 15px; /* Remove horizontal gap when stacked */
+        justify-content: center; /* <<< THIS IS THE CRITICAL ADDITION */
+        width: 100%;
+    }
+    
+    /* Center the individual button groups and add vertical margin */
+    .patch-button-group {
+        margin: 0; 
+        width: auto; /* Allow content to dictate width */
+    }
+}
