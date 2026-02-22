@@ -268,27 +268,22 @@ function onMIDISuccess(midiAccess) {
     });
 }
 
+// --- CREATE REVERSE MAPPING: CC NUMBER TO ELEMENT ID ---
+function createCCToElementMap() {
+    const ccMap = {};
+    ALL_PATCH_CONTROLS.forEach(param => {
+        ccMap[param.cc] = param.id;
+    });
+    return ccMap;
+}
+
+const ccToElementMap = createCCToElementMap();
+
 // --- SETUP MIDI INPUT ---
 function setupMIDIInput(midiAccess) {
     midiAccess.inputs.forEach((input) => {
         input.addEventListener('midimessage', (event) => {
-            const [status, cc, value] = event.data;
-            
-            // Log all incoming MIDI messages
-            console.log(`Incoming MIDI - Status: 0x${status.toString(16).toUpperCase()}, CC: ${cc}, Value: ${value}`);
-            
-            // If you want to specifically log control change messages (CC)
-            if ((status & 0xF0) === 0xB0) {
-                console.log(`CC Message - Controller #${cc}, Value: ${value}`);
-            }
-            
-            // If you want to log note messages
-            if ((status & 0xF0) === 0x90) {
-                console.log(`Note ON - Note: ${cc}, Velocity: ${value}`);
-            }
-            if ((status & 0xF0) === 0x80) {
-                console.log(`Note OFF - Note: ${cc}`);
-            }
+            handleMidiMessage(event);
         });
     });
     
@@ -296,14 +291,41 @@ function setupMIDIInput(midiAccess) {
     midiAccess.addEventListener('statechange', (event) => {
         if (event.port.type === 'input' && event.port.state === 'connected') {
             console.log(`MIDI Input connected: ${event.port.name}`);
-            event.port.addEventListener('midimessage', setupMidiInputHandler);
+            event.port.addEventListener('midimessage', handleMidiMessage);
         }
     });
 }
 
-function setupMidiInputHandler(event) {
+function handleMidiMessage(event) {
     const [status, cc, value] = event.data;
+    
+    // Log all incoming MIDI messages
     console.log(`Incoming MIDI - Status: 0x${status.toString(16).toUpperCase()}, CC: ${cc}, Value: ${value}`);
+    
+    // If it's a control change message (CC)
+    if ((status & 0xF0) === 0xB0) {
+        console.log(`CC Message - Controller #${cc}, Value: ${value}`);
+        
+        // Update the slider if this CC maps to an element
+        const elementId = ccToElementMap[cc];
+        if (elementId) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.value = value;
+                // Dispatch an 'input' event to trigger any visual updates (like pot rotation)
+                element.dispatchEvent(new Event('input', { bubbles: true }));
+                console.log(`Updated slider ${elementId} to ${value}`);
+            }
+        }
+    }
+    
+    // If you want to log note messages
+    if ((status & 0xF0) === 0x90) {
+        console.log(`Note ON - Note: ${cc}, Velocity: ${value}`);
+    }
+    if ((status & 0xF0) === 0x80) {
+        console.log(`Note OFF - Note: ${cc}`);
+    }
 }
 
 // --- HELPER FUNCTION: POPULATE DROPDOWN ---
