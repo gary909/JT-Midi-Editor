@@ -119,13 +119,13 @@ p {
 .bar {
     width: 30px;
     height: 4px;
-    background-color: #EBA85B;
+    background-color: #f4f4f4;
     border-radius: 2px;
     transition: background-color 0.3s ease;
 }
 
 .hamburger-menu:hover .bar {
-    background-color: #8e5a1d;
+    background-color: #FE5A2D;
     cursor: pointer;
 }
 
@@ -157,7 +157,7 @@ p {
 }
 
 .side-nav a:hover {
-    color: #EBA85B;
+    color: #FE5A2D;
 }
 
 .side-nav .close-btn {
@@ -199,7 +199,7 @@ p {
 }
 
 .accordion-header:hover, .active {
-    color: #EBA85B; /* Highlight color */
+    color: #FE5A2D; /* Highlight color */
 }
 
 /* plus/minus icon */
@@ -271,7 +271,7 @@ p {
 .control-box h3 {
     margin-top: 0;
     margin-bottom: 12px;
-    background-color: #F84C26;
+    background-color: #FE5A2D;
 }
 
 .parameter-row {
@@ -333,11 +333,11 @@ input[type="range"] {
 /* Styling for the MIDI output selection box */
 #midi-output-select {
     width: 250px;
-    background-color: #514109;
-    color: #B3B953;
+    background-color: #380105;
+    color: #fa1c27;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
-    border: 5px solid #313236;
+    border: 2px solid #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
     padding: 5px;
     border-radius: 5px;
@@ -376,7 +376,7 @@ input[type="range"] {
 
 /* Style for the buttons themselves */
 #init-patch-button, #random-patch-button {
-    background-color: #fd9934;
+    background-color: #FE5A2D;
     color: #ebe1d7;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
@@ -389,7 +389,7 @@ input[type="range"] {
 }
 
 #init-patch-button:hover, #random-patch-button:hover {
-    background-color: #d67412; 
+    background-color: #a63a1c; 
 }
 
 /* New style to highlight the active OSC2 PWM control */
