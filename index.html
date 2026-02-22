@@ -147,7 +147,7 @@
             <h3>VCO</h3>
             <div class="parameter-row">  
                 <div class="tooltip">
-                    <label for="vco-pwm-modulation">PWM MODULATION</label>
+                    <label for="vco-pwm-modulation">VCO PWM MOD</label>
                     <span class="tooltiptext">MIDI CC 36</span>
                 </div>               
                 <input type="range" id="vco-pwm-modulation" min="0" max="127" value="0">
@@ -155,7 +155,7 @@
 
             <div class="parameter-row">
                 <div class="tooltip">
-                    <label for="vco-detune">DETUNE</label>
+                    <label for="vco-detune">VCO DETUNE</label>
                     <span class="tooltiptext">MIDI CC 42</span>
                 </div>    
                 <input type="range" id="vco-detune" min="0" max="127" value="64">
@@ -163,7 +163,7 @@
 
             <div class="parameter-row">
                 <div class="tooltip">
-                    <label for="vco-pitch-modulation">PITCH MODULATION</label>
+                    <label for="vco-pitch-modulation">VCO PITCH MOD</label>
                     <span class="tooltiptext">MIDI CC 47</span>
                 </div>    
                 <input type="range" id="vco-pitch-modulation" min="0" max="127" value="0">
@@ -176,7 +176,7 @@
 
             <div class="parameter-row">
                 <div class="tooltip">
-                    <label for="lfo-delay-time">DELAY TIME</label>
+                    <label for="lfo-delay-time">LFO DELAY TIME</label>
                     <span class="tooltiptext">MIDI CC 37</span>
                 </div>  
                 <input type="range" id="lfo-delay-time" min="0" max="127" value="0">
@@ -216,7 +216,7 @@
     
             <div class="parameter-row">
                 <div class="tooltip">
-                    <label for="vcf-cutoff">CUTOFF</label>
+                    <label for="vcf-cutoff">VCF CUTOFF</label>
                     <span class="tooltiptext">MIDI CC 44</span>
                 </div> 
                 <input type="range" id="vcf-cutoff" min="0" max="127" value="80">
@@ -224,7 +224,7 @@
 
             <div class="parameter-row">
                 <div class="tooltip">
-                    <label for="vcf-envelope-modulation">ENV MODULATION</label>
+                    <label for="vcf-envelope-modulation">VCF ENV MOD</label>
                     <span class="tooltiptext">MIDI CC 45</span>
                 </div> 
                 <input type="range" id="vcf-envelope-modulation" min="0" max="127" value="64">
@@ -243,37 +243,39 @@
         <div class="control-box">
             <h3>ENVELOPE</h3>
 
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="envelope-attack">ATTACK TIME</label>
-                    <span class="tooltiptext">MIDI CC 49</span>
-                </div> 
-                <input type="range" id="envelope-attack" min="0" max="127" value="0">
-            </div>
-
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="envelope-decay">DECAY TIME</label>
-                    <span class="tooltiptext">MIDI CC 50</span>
-                </div> 
-                <input type="range" id="envelope-decay" min="0" max="127" value="0">
-            </div>         
-
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="envelope-sustain">SUSTAIN LEVEL</label>
-                    <span class="tooltiptext">MIDI CC 51</span>
-                </div>                
-                <input type="range" id="envelope-sustain" min="0" max="127" value="127">
-            </div>
-
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="envelope-release">RELEASE</label>
-                    <span class="tooltiptext">MIDI CC 39</span>
+            <div class="vertical-sliders">
+                <div class="parameter-row">
+                    <div class="tooltip">
+                        <label for="envelope-attack">ATTACK</label>
+                        <span class="tooltiptext">MIDI CC 49</span>
+                    </div> 
+                    <input type="range" id="envelope-attack" min="0" max="127" value="0">
                 </div>
-                <input type="range" id="envelope-release" min="0" max="127" value="0">
-            </div>   
+
+                <div class="parameter-row">
+                    <div class="tooltip">
+                        <label for="envelope-decay">DECAY</label>
+                        <span class="tooltiptext">MIDI CC 50</span>
+                    </div> 
+                    <input type="range" id="envelope-decay" min="0" max="127" value="0">
+                </div>         
+
+                <div class="parameter-row">
+                    <div class="tooltip">
+                        <label for="envelope-sustain">SUSTAIN</label>
+                        <span class="tooltiptext">MIDI CC 51</span>
+                    </div>                
+                    <input type="range" id="envelope-sustain" min="0" max="127" value="127">
+                </div>
+
+                <div class="parameter-row">
+                    <div class="tooltip">
+                        <label for="envelope-release">RELEASE</label>
+                        <span class="tooltiptext">MIDI CC 39</span>
+                    </div>
+                    <input type="range" id="envelope-release" min="0" max="127" value="0">
+                </div>
+            </div>
 
         </div>
 

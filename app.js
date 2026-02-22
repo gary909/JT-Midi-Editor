@@ -147,27 +147,30 @@ function onMIDISuccess(midiAccess) {
     // 1. Initialize the MIDI Output list on load
     populateOutputDevices(midiAccess);
     
-    // 2. Add listeners for device hot-plugging
+    // 2. Setup MIDI Input
+    setupMIDIInput(midiAccess);
+    
+    // 3. Add listeners for device hot-plugging
     midiAccess.addEventListener('statechange', () => populateOutputDevices(midiAccess));
 
-    // 3. Add event listener to the dropdown for user selection
+    // 4. Add event listener to the dropdown for user selection
     document.getElementById('midi-output-select').addEventListener('change', (event) => {
         connectToSelectedOutput(event.target.value, midiAccess);
     });
 
-    // 4. Attach INIT PATCH button listener
+    // 5. Attach INIT PATCH button listener
     const initButton = document.getElementById('init-patch-button');
     if (initButton) {
         initButton.addEventListener('click', initPatch);
     }
 
-    // 5. Attach RANDOM PATCH button listener
+    // 6. Attach RANDOM PATCH button listener
     const randomButton = document.getElementById('random-patch-button');
     if (randomButton) {
         randomButton.addEventListener('click', randomPatch);
     }
 
-    // 6. Attach all parameter listeners
+    // 7. Attach all parameter listeners
     
     // Helper to attach listeners to all continuous sliders
     const attachSliderListener = (ccNumber, elementId) => {
@@ -234,6 +237,44 @@ function onMIDISuccess(midiAccess) {
     attachSliderListener(CC_ENVELOPE_DECAY, 'envelope-decay');
     attachSliderListener(CC_ENVELOPE_SUSTAIN, 'envelope-sustain');
     attachSliderListener(CC_ENVELOPE_RELEASE, 'envelope-release');
+}
+
+// --- SETUP MIDI INPUT ---
+function setupMIDIInput(midiAccess) {
+    midiAccess.inputs.forEach((input) => {
+        input.addEventListener('midimessage', (event) => {
+            const [status, cc, value] = event.data;
+            
+            // Log all incoming MIDI messages
+            console.log(`Incoming MIDI - Status: 0x${status.toString(16).toUpperCase()}, CC: ${cc}, Value: ${value}`);
+            
+            // If you want to specifically log control change messages (CC)
+            if ((status & 0xF0) === 0xB0) {
+                console.log(`CC Message - Controller #${cc}, Value: ${value}`);
+            }
+            
+            // If you want to log note messages
+            if ((status & 0xF0) === 0x90) {
+                console.log(`Note ON - Note: ${cc}, Velocity: ${value}`);
+            }
+            if ((status & 0xF0) === 0x80) {
+                console.log(`Note OFF - Note: ${cc}`);
+            }
+        });
+    });
+    
+    // Handle hot-plugging for inputs too
+    midiAccess.addEventListener('statechange', (event) => {
+        if (event.port.type === 'input' && event.port.state === 'connected') {
+            console.log(`MIDI Input connected: ${event.port.name}`);
+            event.port.addEventListener('midimessage', setupMidiInputHandler);
+        }
+    });
+}
+
+function setupMidiInputHandler(event) {
+    const [status, cc, value] = event.data;
+    console.log(`Incoming MIDI - Status: 0x${status.toString(16).toUpperCase()}, CC: ${cc}, Value: ${value}`);
 }
 
 // --- HELPER FUNCTION: POPULATE DROPDOWN ---
