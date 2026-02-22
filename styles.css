@@ -310,7 +310,70 @@ input[type="range"] {
     accent-color: #fc6d41; 
 }
 
+/* POT STYLING */
+.pot-container {
+    position: relative;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pot-input {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+}
+
+.pot-visual {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #4a4440, #2a2420);
+    border: 2px solid #fc6d41;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pot-parameter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.pot-parameter-row .tooltip {
+    padding: 2px 2px;
+    /* border: 1px solid #555; */
+    border-radius: 4px;
+    /* background-color: rgba(0, 0, 0, 0.3); */
+}
+
+.pot-indicator {
+    position: absolute;
+    width: 1px;
+    height: 6px;
+    background-color: #fc6d41;
+    border-radius: 1px;
+    top: 2px;
+    transform-origin: center 10.5px;
+    transition: transform 0.05s ease-out;
+}
+
 .global-box {
+    min-width: 0;
+    max-width: px !important;
+} 
+
+.lfo-box {
     min-width: 0;
     max-width: px !important;
 } 

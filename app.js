@@ -126,6 +126,26 @@ function randomPatch() {
     console.log("Random patch generated and MIDI messages sent.");
 }
 
+// --- POT INDICATOR UPDATE FUNCTION ---
+function updatePotIndicator(inputElement) {
+    const value = parseInt(inputElement.value);
+    const min = parseInt(inputElement.min);
+    const max = parseInt(inputElement.max);
+    
+    // Map the value (0-127) to rotation angle (-135 to +135 degrees)
+    const percentage = (value - min) / (max - min);
+    const rotation = -135 + (percentage * 270);
+    
+    // Find the associated indicator
+    const potContainer = inputElement.closest('.pot-container');
+    if (potContainer) {
+        const indicator = potContainer.querySelector('.pot-indicator');
+        if (indicator) {
+            indicator.style.transform = `rotate(${rotation}deg)`;
+        }
+    }
+}
+
 // --- INITIALIZATION ---
 if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
@@ -194,6 +214,9 @@ function onMIDISuccess(midiAccess) {
                 const ccValue = parseInt(event.target.value);
                 sendMidiCC(ccNumber, ccValue);
                 
+                // Update pot indicator if this is a pot control
+                updatePotIndicator(event.target);
+                
                 // Format the display text (e.g., MODULATION: 64)
                 const displayText = `${labelText}: ${ccValue}`;
                 
@@ -237,6 +260,12 @@ function onMIDISuccess(midiAccess) {
     attachSliderListener(CC_ENVELOPE_DECAY, 'envelope-decay');
     attachSliderListener(CC_ENVELOPE_SUSTAIN, 'envelope-sustain');
     attachSliderListener(CC_ENVELOPE_RELEASE, 'envelope-release');
+
+    // Initialize pot indicators
+    const potInputs = document.querySelectorAll('.pot-input');
+    potInputs.forEach(input => {
+        updatePotIndicator(input);
+    });
 }
 
 // --- SETUP MIDI INPUT ---
