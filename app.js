@@ -312,9 +312,9 @@ function handleMidiMessage(event) {
             const element = document.getElementById(elementId);
             if (element) {
                 element.value = value;
-                // Dispatch an 'input' event to trigger any visual updates (like pot rotation)
-                element.dispatchEvent(new Event('input', { bubbles: true }));
-                console.log(`Updated slider ${elementId} to ${value}`);
+                // Update the pot indicator directly without dispatching input event
+                // (avoids feedback loop of re-sending MIDI)
+                updatePotIndicator(element);
             }
         }
     }
