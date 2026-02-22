@@ -386,6 +386,15 @@ input[type="range"] {
     max-width: px !important;
 } 
 
+.vco-box {
+    min-width: 0;
+    max-width: px !important;
+} 
+
+.vcf-box {
+    min-width: 0;
+    max-width: px !important;
+} 
 
 /* --- Tooltip Styling --- */
 .tooltip {
