@@ -130,6 +130,37 @@
     
     <div id="controls">
         
+        <div class="control-box voice-box">
+            <h3>VOICE</h3>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="voice-mode" class="pot-input" min="0" max="127" value="6">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="voice-mode-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="voice-mode">VOICE MODE</label>
+                        <span class="tooltiptext">MIDI CC 40 - Poly: 0-12, Unison: 13-37, Arp Up: 38-62, Arp Down: 63-87, Arp Up/Down: 88-112, Arp Random: 113-127</span>
+                    </div>
+                </div>
+
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="octave" class="pot-input" min="0" max="127" value="54">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="octave-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="octave">OCTAVE</label>
+                        <span class="tooltiptext">MIDI CC 41 - 32': 0-21, 16': 22-43, 8': 44-65, 4': 66-87, 2': 88-109, 1': 110-127</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <div class="control-box global-box"> 
             <h3>GLOBAL</h3>
             
@@ -147,29 +178,31 @@
 
         <div class="control-box lfo-box">
             <h3>LFO</h3>
-            <div class="pot-parameter-row">
-                <div class="pot-container">
-                    <input type="range" id="lfo-rate" class="pot-input" min="0" max="127" value="64">
-                    <div class="pot-visual">
-                        <div class="pot-indicator" id="lfo-rate-indicator"></div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="lfo-rate" class="pot-input" min="0" max="127" value="64">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="lfo-rate-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="lfo-rate">RATE</label>
+                        <span class="tooltiptext">MIDI CC 46</span>
                     </div>
                 </div>
-                <div class="tooltip">
-                    <label for="lfo-rate">RATE</label>
-                    <span class="tooltiptext">MIDI CC 46</span>
-                </div>
-            </div>
 
-            <div class="pot-parameter-row">
-                <div class="pot-container">
-                    <input type="range" id="lfo-delay-time" class="pot-input" min="0" max="127" value="0">
-                    <div class="pot-visual">
-                        <div class="pot-indicator" id="lfo-delay-time-indicator"></div>
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="lfo-delay-time" class="pot-input" min="0" max="127" value="0">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="lfo-delay-time-indicator"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="tooltip">
-                    <label for="lfo-delay-time">DELAY TIME</label>
-                    <span class="tooltiptext">MIDI CC 37</span>
+                    <div class="tooltip">
+                        <label for="lfo-delay-time">DELAY TIME</label>
+                        <span class="tooltiptext">MIDI CC 37</span>
+                    </div>
                 </div>
             </div>
 
@@ -267,7 +300,7 @@
             </div>
         </div>
 
-        <div class="control-box">
+        <!-- <div class="control-box">
             <h3>VOICE & OCTAVE</h3>
 
             <div class="parameter-row">
@@ -285,7 +318,7 @@
                 </div>  
                 <input type="range" id="octave" min="0" max="127" value="54">
             </div>
-        </div>
+        </div> -->
 
         <div class="control-box">
             <h3>ENVELOPE</h3>

@@ -260,7 +260,7 @@ p {
 
 .control-box {
     background-color: #353433;
-    border: 3px solid #ebebf0;
+    border: 1px solid #ebebf0;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
@@ -396,6 +396,11 @@ input[type="range"] {
     max-width: px !important;
 } 
 
+.voice-box {
+    min-width: 0;
+    max-width: px !important;
+} 
+
 /* --- Tooltip Styling --- */
 .tooltip {
     position: relative;
@@ -445,7 +450,7 @@ input[type="range"] {
     color: #fa1c27;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
-    border: 2px solid #ffffff;
+    border: 1px solid #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
     padding: 5px;
     border-radius: 5px;
