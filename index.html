@@ -177,30 +177,94 @@
 
         <div class="control-box">            
             <h3>VCO</h3>
-            <div class="parameter-row">  
-                <div class="tooltip">
-                    <label for="vco-pwm-modulation">VCO PWM MOD</label>
-                    <span class="tooltiptext">MIDI CC 36</span>
-                </div>               
-                <input type="range" id="vco-pwm-modulation" min="0" max="127" value="0">
-            </div>
+            <div class="pot-grid">
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vco-pitch-modulation" class="pot-input" min="0" max="127" value="0">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vco-pitch-modulation-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vco-pitch-modulation">VCO PITCH MOD</label>
+                        <span class="tooltiptext">MIDI CC 47</span>
+                    </div>
+                </div>
 
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="vco-detune">VCO DETUNE</label>
-                    <span class="tooltiptext">MIDI CC 42</span>
-                </div>    
-                <input type="range" id="vco-detune" min="0" max="127" value="64">
-            </div>
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vco-detune" class="pot-input" min="0" max="127" value="64">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vco-detune-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vco-detune">VCO DETUNE</label>
+                        <span class="tooltiptext">MIDI CC 42</span>
+                    </div>
+                </div>
 
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="vco-pitch-modulation">VCO PITCH MOD</label>
-                    <span class="tooltiptext">MIDI CC 47</span>
-                </div>    
-                <input type="range" id="vco-pitch-modulation" min="0" max="127" value="0">
-            </div>
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vco-pwm-modulation" class="pot-input" min="0" max="127" value="0">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vco-pwm-modulation-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vco-pwm-modulation">VCO PWM MOD</label>
+                        <span class="tooltiptext">MIDI CC 36</span>
+                    </div>
+                </div>
 
+                <div></div>
+            </div>
+        </div>
+
+        <div class="control-box">
+            <h3>FILTER</h3>
+            <div class="pot-grid">
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vcf-cutoff" class="pot-input" min="0" max="127" value="80">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vcf-cutoff-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vcf-cutoff">VCF CUTOFF</label>
+                        <span class="tooltiptext">MIDI CC 44</span>
+                    </div>
+                </div>
+
+                <div></div>
+
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vcf-lfo-modulation" class="pot-input" min="0" max="127" value="0">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vcf-lfo-modulation-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vcf-lfo-modulation">LFO MODULATION</label>
+                        <span class="tooltiptext">MIDI CC 48</span>
+                    </div>
+                </div>
+
+                <div class="pot-parameter-row">
+                    <div class="pot-container">
+                        <input type="range" id="vcf-envelope-modulation" class="pot-input" min="0" max="127" value="64">
+                        <div class="pot-visual">
+                            <div class="pot-indicator" id="vcf-envelope-modulation-indicator"></div>
+                        </div>
+                    </div>
+                    <div class="tooltip">
+                        <label for="vcf-envelope-modulation">VCF ENV MOD</label>
+                        <span class="tooltiptext">MIDI CC 45</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="control-box">
@@ -221,35 +285,6 @@
                 </div>  
                 <input type="range" id="octave" min="0" max="127" value="54">
             </div>
-        </div>
-        
-        <div class="control-box">
-            <h3>FILTER</h3>
-    
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="vcf-cutoff">VCF CUTOFF</label>
-                    <span class="tooltiptext">MIDI CC 44</span>
-                </div> 
-                <input type="range" id="vcf-cutoff" min="0" max="127" value="80">
-            </div>
-
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="vcf-envelope-modulation">VCF ENV MOD</label>
-                    <span class="tooltiptext">MIDI CC 45</span>
-                </div> 
-                <input type="range" id="vcf-envelope-modulation" min="0" max="127" value="64">
-            </div>    
-
-            <div class="parameter-row">
-                <div class="tooltip">
-                    <label for="vcf-lfo-modulation">LFO MODULATION</label>
-                    <span class="tooltiptext">MIDI CC 48</span>
-                </div> 
-                <input type="range" id="vcf-lfo-modulation" min="0" max="127" value="0">
-            </div>    
-
         </div>
 
         <div class="control-box">

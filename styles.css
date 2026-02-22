@@ -350,6 +350,14 @@ input[type="range"] {
     gap: 8px;
 }
 
+.pot-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    justify-items: center;
+    align-items: start;
+}
+
 .pot-parameter-row .tooltip {
     padding: 2px 2px;
     /* border: 1px solid #555; */
