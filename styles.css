@@ -310,6 +310,11 @@ input[type="range"] {
     accent-color: #fc6d41; 
 }
 
+.global-box {
+    min-width: 0;
+    max-width: px !important;
+} 
+
 
 /* --- Tooltip Styling --- */
 .tooltip {
