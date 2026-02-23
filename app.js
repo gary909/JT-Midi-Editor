@@ -267,12 +267,27 @@ function onMIDISuccess(midiAccess) {
     // Attach VOICE MODE toggle switch listener
     const voiceModeToggle = document.getElementById('voice-mode');
     if (voiceModeToggle && voiceModeToggle.type === 'checkbox') {
+        const statusElement = document.getElementById('midi-output-select');
+        
         voiceModeToggle.addEventListener('change', (event) => {
             // Unchecked (Poly) = CC 40 value 0
             // Checked (Unison) = CC 40 value 13
             const ccValue = event.target.checked ? 13 : 0;
+            const modeText = event.target.checked ? 'Unison' : 'Poly';
+            
             sendMidiCC(CC_VOICE_MODE, ccValue);
-            console.log(`CC ${CC_VOICE_MODE} (voice-mode): Value ${ccValue} (${event.target.checked ? 'Unison' : 'Poly'})`);
+            console.log(`CC ${CC_VOICE_MODE} (voice-mode): Value ${ccValue} (${modeText})`);
+            
+            // Display the voice mode change
+            if (statusElement) {
+                originalMidiStatusText = statusElement.options[statusElement.selectedIndex].textContent;
+                statusElement.options[statusElement.selectedIndex].textContent = `VOICE MODE: ${modeText}`;
+                
+                // Restore original text after 1.5 seconds
+                setTimeout(() => {
+                    statusElement.options[statusElement.selectedIndex].textContent = originalMidiStatusText;
+                }, 1500);
+            }
         });
         
         // Add click handler to the toggle-switch container for better clickability
