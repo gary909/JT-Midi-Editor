@@ -133,16 +133,18 @@
         <div class="control-box voice-box">
             <h3>VOICE</h3>
             <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="voice-mode" class="pot-input" min="0" max="127" value="6">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="voice-mode-indicator"></div>
+                <div class="switch-parameter-row">
+                    <div class="toggle-switch-container">
+                        <label for="voice-mode" class="toggle-switch-label">VOICE MODE</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="voice-mode" class="toggle-checkbox">
+                            <label for="voice-mode" class="toggle-slider"></label>
+                            <span class="toggle-label poly" id="poly-label">POLY</span>
+                            <span class="toggle-label unison" id="unison-label">UNI</span>
                         </div>
                     </div>
                     <div class="tooltip">
-                        <label for="voice-mode">VOICE MODE</label>
-                        <span class="tooltiptext">MIDI CC 40 - Poly: 0-12, Unison: 13-37, Arp Up: 38-62, Arp Down: 63-87, Arp Up/Down: 88-112, Arp Random: 113-127</span>
+                        <span class="tooltiptext">MIDI CC 40 - Toggle between Poly (0-12) and Unison (13-37)</span>
                     </div>
                 </div>
 

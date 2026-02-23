@@ -48,7 +48,7 @@ const ALL_PATCH_CONTROLS = [
     { id: 'lfo-rate', cc: CC_LFO_RATE, value: 64 }, // Center
 
     // Voice and Octave Controls
-    { id: 'voice-mode', cc: CC_VOICE_MODE, value: 6 }, // Voice Mode Poly (0-12 range)
+    { id: 'voice-mode', cc: CC_VOICE_MODE, value: 0, isCheckbox: true }, // Voice Mode Toggle: Poly (0) or Unison (13)
     { id: 'octave', cc: CC_OCTAVE, value: 54 }, // Octave 8' (44-65 range)
 
     // Filter (VCF)
@@ -101,13 +101,15 @@ function randomPatch() {
     ALL_PATCH_CONTROLS.forEach(param => {
         const element = document.getElementById(param.id);
         if (element) {
-            let minValue = 0; // Default min
-            let maxValue = 127; // Default max
-            
             let randomValue;
             let midiValue;
             
-            if (param.isCheckbox) {
+            if (param.id === 'voice-mode') {
+                // Special handling for voice-mode: randomly choose between Poly (0) or Unison (13)
+                randomValue = getRandomInt(0, 1) === 0 ? false : true;
+                element.checked = randomValue;
+                midiValue = randomValue ? 13 : 0;
+            } else if (param.isCheckbox) {
                 // Randomly set checkbox On/Off (0 or 127)
                 // 1 in 3 chance of being ON (127)
                 randomValue = getRandomInt(0, 2) === 2 ? 127 : 0;
@@ -115,6 +117,8 @@ function randomPatch() {
                 midiValue = randomValue;
             } else {
                 // Random value for sliders
+                let minValue = 0; // Default min
+                let maxValue = 127; // Default max
                 randomValue = getRandomInt(minValue, maxValue);
                 element.value = randomValue;
                 midiValue = randomValue;
@@ -247,7 +251,6 @@ function onMIDISuccess(midiAccess) {
     attachSliderListener(CC_LFO_RATE, 'lfo-rate');
 
     // Voice and Octave Controls
-    attachSliderListener(CC_VOICE_MODE, 'voice-mode');
     attachSliderListener(CC_OCTAVE, 'octave');
 
     // Filter (VCF)
@@ -260,6 +263,30 @@ function onMIDISuccess(midiAccess) {
     attachSliderListener(CC_ENVELOPE_DECAY, 'envelope-decay');
     attachSliderListener(CC_ENVELOPE_SUSTAIN, 'envelope-sustain');
     attachSliderListener(CC_ENVELOPE_RELEASE, 'envelope-release');
+
+    // Attach VOICE MODE toggle switch listener
+    const voiceModeToggle = document.getElementById('voice-mode');
+    if (voiceModeToggle && voiceModeToggle.type === 'checkbox') {
+        voiceModeToggle.addEventListener('change', (event) => {
+            // Unchecked (Poly) = CC 40 value 0
+            // Checked (Unison) = CC 40 value 13
+            const ccValue = event.target.checked ? 13 : 0;
+            sendMidiCC(CC_VOICE_MODE, ccValue);
+            console.log(`CC ${CC_VOICE_MODE} (voice-mode): Value ${ccValue} (${event.target.checked ? 'Unison' : 'Poly'})`);
+        });
+        
+        // Add click handler to the toggle-switch container for better clickability
+        const toggleSwitch = voiceModeToggle.closest('.toggle-switch');
+        if (toggleSwitch) {
+            toggleSwitch.addEventListener('click', (event) => {
+                // Only toggle if clicking on the switch container, not on other elements
+                if (event.target === toggleSwitch || event.target.parentElement === toggleSwitch) {
+                    voiceModeToggle.checked = !voiceModeToggle.checked;
+                    voiceModeToggle.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+        }
+    }
 
     // Initialize pot indicators
     const potInputs = document.querySelectorAll('.pot-input');
@@ -305,6 +332,17 @@ function handleMidiMessage(event) {
     // If it's a control change message (CC)
     if ((status & 0xF0) === 0xB0) {
         console.log(`CC Message - Controller #${cc}, Value: ${value}`);
+        
+        // Special handling for VOICE MODE (CC 40) checkbox
+        if (cc === CC_VOICE_MODE) {
+            const voiceModeToggle = document.getElementById('voice-mode');
+            if (voiceModeToggle && voiceModeToggle.type === 'checkbox') {
+                // 0-12 = Poly (unchecked), 13-37 = Unison (checked)
+                voiceModeToggle.checked = value >= 13;
+                console.log(`Updated voice-mode to ${voiceModeToggle.checked ? 'Unison' : 'Poly'} (value ${value})`);
+                return;
+            }
+        }
         
         // Update the slider if this CC maps to an element
         const elementId = ccToElementMap[cc];

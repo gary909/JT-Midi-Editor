@@ -604,3 +604,96 @@ input[type="range"] {
         width: auto; /* Allow content to dictate width */
     }
 }
+
+/* --- TOGGLE SWITCH STYLING --- */
+.toggle-switch-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.toggle-switch-label {
+    color: #ebe1d7;
+    font-size: 10px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 50px;
+    height: 20px;
+    background-color: #2a2420;
+    border: 2px solid #fc6d41;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.toggle-checkbox {
+    display: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+    margin: 0;
+    opacity: 0;
+    z-index: 3;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background-color: #fc6d41;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.toggle-checkbox:checked + .toggle-slider {
+    left: 32px;
+}
+
+.toggle-label {
+    position: absolute;
+    font-size: 8px;
+    font-weight: bold;
+    color: #ebe1d7;
+    text-align: center;
+    user-select: none;
+    z-index: 1;
+    top: 100%;
+    margin-top: 4px;
+    width: 40px;
+}
+
+.toggle-label.poly {
+    right: 50%;
+    margin-right: 4px;
+    text-align: right;
+}
+
+.toggle-label.unison {
+    left: 50%;
+    margin-left: 4px;
+    text-align: left;
+}
+
+.toggle-checkbox:checked ~ .toggle-label.poly {
+    color: #888;
+}
+
+.toggle-checkbox:not(:checked) ~ .toggle-label.unison {
+    color: #888;
+}
+
+.switch-parameter-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
