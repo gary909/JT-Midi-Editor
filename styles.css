@@ -233,7 +233,7 @@ p {
     display: flex;
     justify-content: space-around;
     align-items: center; 
-    max-width: 1280px;
+    max-width: 936px;
     width: 100%;
     margin-bottom: 10px;
     padding: 0 10px;
@@ -527,7 +527,14 @@ input[type="range"] {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 30px;
+    margin-left: 40px;
+}
+
+.patch-button-left {
+    /* display: flex;
+    flex-direction: column;
+    align-items: center; */
+    margin-left: 80px;
 }
 
 .patch-button-group label {
@@ -578,7 +585,7 @@ input[type="range"] {
 }
 
 /* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
-@media (max-width: 768px) {
+@media (max-width: 850px) {
 
     /* Floating Screen bar */
     #midi-status {
