@@ -221,8 +221,22 @@ function onMIDISuccess(midiAccess) {
                 // Update pot indicator if this is a pot control
                 updatePotIndicator(event.target);
                 
-                // Format the display text (e.g., MODULATION: 64)
-                const displayText = `${labelText}: ${ccValue}`;
+                // Special handling for OCTAVE to display the octave name
+                let displayText;
+                if (elementId === 'octave') {
+                    let octaveName;
+                    if (ccValue <= 21) octaveName = "32'";
+                    else if (ccValue <= 43) octaveName = "16'";
+                    else if (ccValue <= 65) octaveName = "8'";
+                    else if (ccValue <= 87) octaveName = "4'";
+                    else if (ccValue <= 109) octaveName = "2'";
+                    else octaveName = "1'";
+                    
+                    displayText = `${labelText}: ${octaveName}`;
+                } else {
+                    // Format the display text (e.g., MODULATION: 64)
+                    displayText = `${labelText}: ${ccValue}`;
+                }
                 
                 // Console log (retained from previous steps)
                 console.log(`CC ${ccNumber} (${elementId}): Value ${ccValue}`);
