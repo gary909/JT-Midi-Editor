@@ -310,6 +310,30 @@ input[type="range"] {
     accent-color: #fc6d41; 
 }
 
+/* SLIDER INDICATORS */
+.slider-visual {
+    position: relative;
+    display: inline-block;
+}
+
+.slider-tick {
+    position: absolute;
+    left: -3px;
+    width: 4px;
+    height: 1px;
+    background-color: #e4e4e4;
+    pointer-events: none;
+}
+
+.slider-tickRight {
+    position: absolute;
+    left: 13px;
+    width: 4px;
+    height: 1px;
+    background-color: #e4e4e4;
+    pointer-events: none;
+}
+
 /* POT STYLING */
 .pot-container {
     position: relative;
