@@ -85,6 +85,8 @@ function initPatch() {
             } else {
                 // For Sliders
                 element.value = param.value;
+                // Update pot indicator
+                updatePotIndicator(element);
             }
             
             // Send the MIDI CC message
@@ -122,6 +124,8 @@ function randomPatch() {
                 randomValue = getRandomInt(minValue, maxValue);
                 element.value = randomValue;
                 midiValue = randomValue;
+                // Update pot indicator
+                updatePotIndicator(element);
             }
             
             sendMidiCC(param.cc, midiValue);
