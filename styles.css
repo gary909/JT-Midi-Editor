@@ -288,6 +288,33 @@ p {
     background-color: #FE5A2D;
 }
 
+.privacy-page #controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 320px));
+    justify-content: center;
+    gap: 20px;
+}
+
+.privacy-page .control-box {
+    width: 320px;
+    min-height: 240px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+@media (max-width: 700px) {
+    .privacy-page #controls {
+        grid-template-columns: 1fr;
+    }
+
+    .privacy-page .control-box {
+        width: 100%;
+        min-height: auto;
+    }
+}
+
 .parameter-row {
     display: flex;
     justify-content: space-between;
