@@ -76,7 +76,7 @@ p {
 
 #version-number {
   position: fixed;
-  bottom: 10px;
+    bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   font-family: 'Helvetica', sans-serif;
@@ -109,7 +109,7 @@ p {
   }
   #version-number {
     position: fixed;
-    bottom: 10px;
+        bottom: 6px;
     left: 50%;
     transform: translateX(-50%);
     margin: 0;
