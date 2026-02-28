@@ -489,11 +489,19 @@ closeBtn.addEventListener('click', (e) => {
     sideNav.style.width = "0";
 });
 
-// About Alert
+// About Alert - set pop up text here
 aboutBtn.addEventListener('click', (e) => {
     e.preventDefault();
     alert('JT Mini MIDI Editor\nVersion 1.0\nCreated for Behringer JT Mini Synthesizer');
 });
+
+// Version Number Click
+const versionNumber = document.getElementById('version-number');
+if (versionNumber) {
+    versionNumber.addEventListener('click', (e) => {
+        alert('JT Mini MIDI Editor\nVersion 1.0\nCreated for Behringer JT Mini Synthesizer');
+    });
+}
 
 // Close menu if clicking anywhere outside the side-nav
 window.addEventListener('click', (e) => {

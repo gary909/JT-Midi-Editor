@@ -74,6 +74,22 @@ p {
     text-decoration: none;
 }
 
+#version-number {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Helvetica', sans-serif;
+  font-size: 12px;
+  color: #b7c0d3;
+  cursor: pointer;
+  z-index: 998;
+}
+
+#version-number:hover {
+  color: #EBA85B;
+}
+
 #controls a {
     color: #EBA85B;
     text-decoration: none;
@@ -90,6 +106,13 @@ p {
     margin-bottom: 5px;
     transform: none;
     left: auto;
+  }
+  #version-number {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
   }
 }
 
@@ -312,6 +335,14 @@ p {
     .privacy-page .control-box {
         width: 100%;
         min-height: auto;
+    }
+
+    #version-number {
+        position: static;
+        transform: none;
+        left: auto;
+        margin: 10px auto;
+        text-align: center;
     }
 }
 
@@ -627,6 +658,13 @@ input[type="range"] {
 
 /* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
 @media (max-width: 850px) {
+    #version-number {
+        position: static;
+        transform: none;
+        left: auto;
+        margin: 10px auto;
+        text-align: center;
+    }
 
     /* Floating Screen bar */
     #midi-status {
