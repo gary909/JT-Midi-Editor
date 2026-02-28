@@ -52,13 +52,30 @@ p {
 
 /* ********** FOOTER DISCLAIMER STYLING ********** */
 #footer-disclaimer {
+    position: relative;
   background-color: rgba(20, 20, 20, 0.7);
-  padding: 12px 20px;
+    padding: 12px 28px 12px 20px;
   border-radius: 8px;
   max-width: 90%;
   text-align: center;
   left: 50%;
   transform: translateX(-50%);
+}
+
+#footer-disclaimer-close {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+#footer-disclaimer-close:hover {
+    color: #EBA85B;
 }
 
 #footer-disclaimer p {
@@ -90,6 +107,71 @@ p {
   color: #EBA85B;
 }
 
+#version-number a {
+    color: #b7c0d3;
+    text-decoration: none;
+}
+
+#version-number a:hover {
+    color: #b7c0d3;
+    text-decoration: underline;
+}
+
+#about-modal {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+#about-modal.modal-hidden {
+    display: none;
+}
+
+#about-modal-content {
+    position: relative;
+    background-color: rgba(20, 20, 20, 0.95);
+    border: 1px solid #EBA85B;
+    border-radius: 8px;
+    padding: 18px 24px 14px;
+    min-width: 240px;
+    text-align: center;
+}
+
+#about-modal-content p {
+    margin: 6px 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    color: #b7c0d3;
+}
+
+#about-modal-content a {
+    color: #EBA85B;
+    text-decoration: none;
+}
+
+#about-modal-content a:hover {
+    text-decoration: underline;
+}
+
+#about-modal-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    border: none;
+    background: transparent;
+    color: #b7c0d3;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#about-modal-close:hover {
+    color: #EBA85B;
+}
+
 #controls a {
     color: #EBA85B;
     text-decoration: none;
@@ -104,8 +186,11 @@ p {
     position: relative;
     margin: 10px auto 0;
     margin-bottom: 5px;
+        margin-left: 8px;
+        margin-right: 8px;
     transform: none;
     left: auto;
+        max-width: none;
   }
   #version-number {
     position: fixed;
@@ -114,6 +199,12 @@ p {
     transform: translateX(-50%);
     margin: 0;
   }
+}
+
+@media (min-width: 1201px) {
+    #footer-disclaimer p {
+        white-space: nowrap;
+    }
 }
 
 @media (min-width: 768px) {

@@ -479,6 +479,11 @@ const hamburger = document.getElementById('hamburger-menu');
 const sideNav = document.getElementById('side-nav');
 const closeBtn = document.getElementById('close-btn');
 const aboutBtn = document.getElementById('about-btn');
+const aboutModal = document.getElementById('about-modal');
+const aboutModalClose = document.getElementById('about-modal-close');
+const aboutModalContent = document.getElementById('about-modal-content');
+const footerDisclaimer = document.getElementById('footer-disclaimer');
+const footerDisclaimerClose = document.getElementById('footer-disclaimer-close');
 
 hamburger.addEventListener('click', () => {
     sideNav.style.width = "280px";
@@ -489,17 +494,55 @@ closeBtn.addEventListener('click', (e) => {
     sideNav.style.width = "0";
 });
 
-// About Alert - set pop up text here
+function openAboutModal() {
+    if (!aboutModal) return;
+    aboutModal.classList.remove('modal-hidden');
+    aboutModal.setAttribute('aria-hidden', 'false');
+}
+
+function closeAboutModal() {
+    if (!aboutModal) return;
+    aboutModal.classList.add('modal-hidden');
+    aboutModal.setAttribute('aria-hidden', 'true');
+}
+
 aboutBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    alert('JT Mini MIDI Editor\nVersion 1.0\nCreated for Behringer JT Mini Synthesizer');
+    openAboutModal();
+});
+
+if (aboutModalClose) {
+    aboutModalClose.addEventListener('click', () => {
+        closeAboutModal();
+    });
+}
+
+if (aboutModal) {
+    aboutModal.addEventListener('click', (e) => {
+        if (!aboutModalContent || !aboutModalContent.contains(e.target)) {
+            closeAboutModal();
+        }
+    });
+}
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeAboutModal();
+    }
 });
 
 // Version Number Click
 const versionNumber = document.getElementById('version-number');
 if (versionNumber) {
     versionNumber.addEventListener('click', (e) => {
-        alert('JT Mini MIDI Editor\nVersion 1.0\nCreated for Behringer JT Mini Synthesizer');
+        if (e.target.closest('a')) return;
+        openAboutModal();
+    });
+}
+
+if (footerDisclaimerClose && footerDisclaimer) {
+    footerDisclaimerClose.addEventListener('click', () => {
+        footerDisclaimer.style.display = 'none';
     });
 }
 
