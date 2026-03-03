@@ -98,7 +98,7 @@ p {
   transform: translateX(-50%);
   font-family: 'Helvetica', sans-serif;
   font-size: 12px;
-  color: #b7c0d3;
+  color: #4d4f53;
   cursor: pointer;
   z-index: 998;
 }
@@ -229,6 +229,22 @@ p {
     justify-content: space-between;
     /* border-top: 1px solid #333; */
     /* margin-top: 20px; */
+}
+
+.side-nav .nav-note a {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    text-align: inherit;
+    text-decoration: underline;
+}
+
+.side-nav .nav-note a:hover {
+    color: inherit;
 }
 
 /* ********** HAMBURGER STYLING ******* */
