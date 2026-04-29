@@ -558,6 +558,63 @@ window.addEventListener('click', (e) => {
     }
 });
 
+// --- Nav synth 3D spin on hover ---
+(function () {
+    const wrap = document.querySelector('.nav-synth-wrap');
+    if (!wrap) return;
+
+    const front = wrap.querySelector('.nav-synth-img--front');
+    const mid   = wrap.querySelector('.nav-synth-img--mid');
+    const back  = wrap.querySelector('.nav-synth-img--back');
+
+    const SPIN_SPEED  = 1.0;  // degrees per frame (~60 deg/sec at 60fps)
+    const RETURN_SPEED = 1.5; // degrees per frame when returning
+
+    let angle = 0;
+    applyAngle(0); // set initial 3D transforms on all layers at page load
+    let rafId = null;
+    let isHovered = false;
+
+    function applyAngle(a) {
+        const p = 'perspective(400px)';
+        front.style.transform = `${p} rotateY(${a}deg)`;
+        mid.style.transform   = `${p} rotateY(${a}deg) translateZ(-6px)`;
+        back.style.transform  = `${p} rotateY(${a}deg) translateZ(-12px)`;
+    }
+
+    function loop() {
+        if (isHovered) {
+            angle = (angle + SPIN_SPEED) % 360;
+            applyAngle(angle);
+            rafId = requestAnimationFrame(loop);
+        } else {
+            // Normalise to shortest return path back to 0
+            let a = ((angle % 360) + 360) % 360;
+            if (a > 180) a -= 360; // take shorter path
+            if (Math.abs(a) < RETURN_SPEED) {
+                angle = 0;
+                applyAngle(0);
+                rafId = null;
+                return;
+            }
+            // Rotate back toward 0
+            angle = a > 0 ? a - RETURN_SPEED : a + RETURN_SPEED;
+            applyAngle(angle);
+            rafId = requestAnimationFrame(loop);
+        }
+    }
+
+    wrap.addEventListener('mouseenter', () => {
+        isHovered = true;
+        if (!rafId) rafId = requestAnimationFrame(loop);
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+        isHovered = false;
+        if (!rafId) rafId = requestAnimationFrame(loop);
+    });
+}());
+
 // --- ACCORDION LOGIC ---
 const acc = document.getElementsByClassName("accordion-header");
 for (let i = 0; i < acc.length; i++) {

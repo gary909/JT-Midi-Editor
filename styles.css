@@ -1,6 +1,14 @@
 html {
   height: 100%;
-  background: linear-gradient(180deg, #3a3938 0%, #282727 100%);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0.03) 2px,
+      transparent 2px,
+      transparent 4px
+    ),
+    linear-gradient(180deg, #3a3938 0%, #282727 100%);
   background-attachment: fixed;
 }
 
@@ -263,7 +271,7 @@ p {
 .bar {
     width: 30px;
     height: 4px;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4a1;
     border-radius: 2px;
     transition: background-color 0.3s ease;
 }
@@ -403,19 +411,31 @@ p {
 }
 
 .control-box {
-    background-color: #353433;
-    border: 1px solid #ebebf0;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.03) 2px,
+            transparent 2px,
+            transparent 4px
+        ),
+        linear-gradient(180deg, rgba(61, 59, 57, 0.5) 0, rgba(46, 44, 42, 0.5) 100%);
+    border: 2px solid #FE5A2D;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 0 #191b20, inset 0 0 0 1px rgba(255, 140, 90, 0.1);
     min-width: 200px;
     margin: 10px;
 }
 
 .control-box h3 {
-    margin-top: 0;
-    margin-bottom: 12px;
+    margin: 0 0 12px;
+    padding: 6px;
     background-color: #FE5A2D;
+    border-radius: 0;
+    text-align: center;
+    letter-spacing: 0.7px;
+    /* font-style: italic; */
 }
 
 .privacy-page #controls {
@@ -476,11 +496,103 @@ p {
 }
 
 .vertical-sliders input[type="range"] {
-    width: 10px;
-    height: 90px;
-    writing-mode: bt-lr;
-    -webkit-appearance: slider-vertical;
-    appearance: slider-vertical;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 96px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+    background: transparent;
+}
+.vertical-sliders input[type="range"]::-webkit-slider-runnable-track {
+    width: 22px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+}
+.vertical-sliders input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid #0d1018;
+    border-top-color: #5a6070;
+    background: linear-gradient(180deg,
+        #7a8090 0%,
+        #50566a 18%,
+        #2e3248 40%,
+        #222640 43%,
+        #e4e4e8 44%,
+        #e4e4e8 56%,
+        #1e2236 57%,
+        #14182a 80%,
+        #0c1018 100%
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 2px 5px rgba(0, 0, 0, 0.7);
+}
+.vertical-sliders input[type="range"]::-moz-range-track {
+    width: 22px;
+    border-radius: 6px;
+    background: transparent;
+    border: none;
+}
+.vertical-sliders input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid #0d1018;
+    border-top-color: #5a6070;
+    background: linear-gradient(180deg,
+        #7a8090 0%,
+        #50566a 18%,
+        #2e3248 40%,
+        #222640 43%,
+        #e4e4e8 44%, #e4e4e8 56%,
+        #1e2236 57%,
+        #14182a 80%,
+        #0c1018 100%
+    );
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.15),
+        0 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+/* Track background with tick marks */
+.vertical-sliders .slider-visual::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px;
+    height: 96px;
+    background: repeating-linear-gradient(
+        180deg,
+        transparent 0px,
+        transparent 7px,
+        #808080 7px,
+        #808080 8.5px
+    );
+    background-position: 0 -5px;
+    z-index: 0;
+}
+
+.vertical-sliders .slider-visual::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 96px;
+    background: #13171F;
+    z-index: 1;
 }
 
 /* SLIDER STYLING */
@@ -493,6 +605,12 @@ input[type="range"] {
 .slider-visual {
     position: relative;
     display: inline-block;
+}
+
+/* Hide old tick mark divs in vertical sliders (replaced by ::before/::after) */
+.vertical-sliders .slider-tick,
+.vertical-sliders .slider-tickRight {
+    display: none;
 }
 
 .slider-tick {
@@ -537,9 +655,13 @@ input[type="range"] {
     width: 25px;
     height: 25px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #4a4440, #2a2420);
-    border: 2px solid #fc6d41;
-    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 2px 5px rgba(0, 0, 0, 0.4);
+    background: radial-gradient(circle at 38% 32%, #3c3c40 0%, #1e1e22 50%, #101012 100%);
+    border: 2px solid #2a2a2e;
+    box-shadow:
+        inset 0 1px 3px rgba(255, 255, 255, 0.07),
+        inset 0 -1px 2px rgba(0, 0, 0, 0.85),
+        0 2px 5px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 255, 255, 0.04);
     pointer-events: none;
     display: flex;
     align-items: center;
@@ -570,9 +692,9 @@ input[type="range"] {
 
 .pot-indicator {
     position: absolute;
-    width: 1px;
-    height: 6px;
-    background-color: #fc6d41;
+    width: 2px;
+    height: 7px;
+    background-color: #e8e4d889;
     border-radius: 1px;
     top: 2px;
     transform-origin: center 10.5px;
@@ -582,8 +704,8 @@ input[type="range"] {
 .pot-tick {
     position: absolute;
     width: 2px;
-    height: 2px;
-    background-color: #e4e4e4;
+    height: 3px;
+    background-color: #e4e4e48e;
     border-radius: 50%;
     top: 50%;
     left: 50%;
@@ -610,16 +732,51 @@ input[type="range"] {
 .lfo-box {
     min-width: 0;
     max-width: px !important;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.lfo-box > h3 {
+    margin-left: -25px;
+    margin-right: -25px;
+}
+
+.lfo-box .vertical-sliders {
+    gap: 20px;
 } 
 
 .vco-box {
     min-width: 0;
     max-width: px !important;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.vco-box > h3 {
+    margin-left: -10px;
+    margin-right: -10px;
 } 
 
 .vcf-box {
     min-width: 0;
     max-width: px !important;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.vcf-box > h3 {
+    margin-left: -20px;
+    margin-right: -20px;
+} 
+
+.envelope-box {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.envelope-box > h3 {
+    margin-left: -15px;
+    margin-right: -15px;
 } 
 
 .voice-box {
@@ -676,7 +833,8 @@ input[type="range"] {
     color: #fa1c27;
     font-family: 'VT323', monospace;
     font-size: 1.2em;
-    border: 1px solid #ffffff;
+    text-shadow: rgba(250, 110, 110, 0.5) 1px 0 8px; /* set glow of text */
+    border: 3px solid rgba(0, 0, 0, 0.3);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
     padding: 5px;
     border-radius: 5px;
@@ -699,6 +857,7 @@ input[type="range"] {
     display: flex;
     gap: 15px;
     margin-right: 10px;
+    margin-top: 25px;
     flex-shrink: 0;
 }
 
@@ -722,20 +881,22 @@ input[type="range"] {
 
 /* Style for the buttons themselves */
 #init-patch-button, #random-patch-button {
-    background-color: #FE5A2D;
-    color: #ebe1d7;
-    font-family: 'VT323', monospace;
-    font-size: 1.2em;
-    border: 2px solid #fcfcfc; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), inset 0 0 10px 1px rgba(0, 0, 0, 0.1);
-    padding: 5px 10px;
-    border-radius: 5px;
+    width: 22px;
+    height: 34px;
+    background: #FE5A2D;
+    border: 1px solid #1c222d;
+    border-radius: 4px;
+    box-shadow: inset 0 0 0 1px rgb(22, 22, 23), inset 0 2px 6px rgba(0, 0, 0, 0.3), 0 1px 1px rgba(0, 0, 0, 0.55), 0 0 6px 1px rgba(48, 20, 10, 0.4);
     cursor: pointer;
     transition: background-color 0.1s;
+    padding: 0;
+    font-size: 0;
+    color: transparent;
 }
 
 #init-patch-button:hover, #random-patch-button:hover {
-    background-color: #a63a1c; 
+    background-color: #a63a1c;
+    border-color: #FE5A2D;
 }
 
 /* New style to highlight the active OSC2 PWM control */
@@ -762,6 +923,43 @@ input[type="range"] {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.nav-synth-wrap {
+    position: relative;
+    width: 70%;
+    margin: 10px auto;
+    perspective: 400px;
+}
+
+.nav-synth-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.nav-synth-img--front {
+    position: relative;
+    z-index: 3;
+    opacity: 0.92;
+}
+
+.nav-synth-img--mid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    opacity: 0.4;
+}
+
+.nav-synth-img--back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.2;
+}
+
+/* Nav synth spin is handled by JS */
 
 /* --- NEW MEDIA QUERY FOR MOBILE VIEW --- */
 @media (max-width: 850px) {
@@ -864,9 +1062,11 @@ input[type="range"] {
     align-items: center;
     width: 50px;
     height: 20px;
-    background-color: #2a2420;
-    border: 2px solid #fc6d41;
+    background: linear-gradient(180deg, #0e1018 0%, #1a1e28 60%, #141820 100%);
+    border: 1px solid #2a2e3a;
+    border-top-color: #0a0c10;
     border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.7), inset 0 -1px 1px rgba(255,255,255,0.04), 0 1px 1px rgba(255,255,255,0.05);
     cursor: pointer;
 }
 
@@ -887,8 +1087,26 @@ input[type="range"] {
     left: 2px;
     width: 16px;
     height: 16px;
-    background-color: #fc6d41;
     border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 28%,
+            rgba(255,255,255,0.55) 0%,
+            rgba(255,255,255,0.0) 45%
+        ),
+        radial-gradient(circle at 38% 32%,
+            #c8ccd6 0%,
+            #8a909e 20%,
+            #50566a 45%,
+            #2e3248 70%,
+            #14182a 100%
+        );
+    border: 1px solid #0a0c12;
+    border-top-color: #7a8090;
+    box-shadow:
+        inset 0 2px 3px rgba(255,255,255,0.3),
+        inset 0 -1px 3px rgba(0,0,0,0.75),
+        0 2px 5px rgba(0,0,0,0.8),
+        0 0 0 1px rgba(255,255,255,0.06);
     transition: left 0.3s ease;
     cursor: pointer;
     z-index: 2;

@@ -54,7 +54,11 @@
         <nav class="side-nav" id="side-nav">
             <a href="#" class="close-btn" id="close-btn">&times;</a>
             <a href="#" id="about-btn" class="HambText">JT MINI EDITOR</a>
-            <img src="media/Behringer_JTmini_cutout.svg" alt="JT Mini Synth Image" class="wavs-diagram">
+            <div class="nav-synth-wrap">
+                <img src="media/Behringer_JTmini_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--back">
+                <img src="media/Behringer_JTmini_cutout.svg" alt="" aria-hidden="true" class="nav-synth-img nav-synth-img--mid">
+                <img src="media/Behringer_JTmini_cutout.svg" alt="JT Mini Synth" class="nav-synth-img nav-synth-img--front">
+            </div>
             
             <div class="accordion-item">
                 <button class="accordion-header">GUIDE</button>
@@ -71,6 +75,7 @@
                     <a class="linkText" href="https://www.behringer-jt4000m-editor.co.uk/">JT4000M MICRO EDITOR</a>
                     <a class="linkText" href="https://www.behringer-ub1-micro-editor.co.uk/">UB-1 MICRO EDITOR</a>
                     <a class="linkText" href="https://www.behringer-cz1-editor.co.uk/">CZ-1 MINI</a>
+                    <a class="linkText" href="https://gary909.github.io/Pro_VS_Mini_Editor/">Pro VS MINI</a>
                     <!-- <a class="linkText" target="_blank" href="https://gary909.github.io/JT-Midi-Editor/">JT MINI</a> -->
                     <!-- <a class="linkText" href="javascript:void(0)">PRO VS MINI (coming soon)</a> -->
                 </div>
@@ -201,52 +206,41 @@
 
         <div class="control-box lfo-box">
             <h3>LFO</h3>
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="lfo-rate" class="pot-input" min="0" max="127" value="64">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="lfo-rate-indicator"></div>
-                            <div class="pot-tick" style="transform: rotate(130deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(0deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-130deg) translateY(-16px)"></div>
-                        </div>
-                    </div>
+
+            <div class="vertical-sliders">
+                <div class="parameter-row">
                     <div class="tooltip">
                         <label for="lfo-rate">RATE</label>
                         <span class="tooltiptext">MIDI CC 46</span>
                     </div>
+                    <div class="slider-visual">
+                        <input type="range" id="lfo-rate" min="0" max="127" value="64">
+                        <div class="slider-tick" style="top: 11.11%"></div>
+                        <div class="slider-tick" style="top: 22.22%"></div>
+                        <div class="slider-tick" style="top: 33.33%"></div>
+                        <div class="slider-tick" style="top: 44.44%"></div>
+                        <div class="slider-tick" style="top: 55.56%"></div>
+                        <div class="slider-tick" style="top: 66.67%"></div>
+                        <div class="slider-tick" style="top: 77.78%"></div>
+                        <div class="slider-tick" style="top: 88.89%"></div>
+                    </div>
                 </div>
 
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="lfo-delay-time" class="pot-input" min="0" max="127" value="0">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="lfo-delay-time-indicator"></div>
-                            <div class="pot-tick" style="transform: rotate(130deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(0deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-130deg) translateY(-16px)"></div>
-                        </div>
-                    </div>
+                <div class="parameter-row">
                     <div class="tooltip">
-                        <label for="lfo-delay-time">DELAY TIME</label>
+                        <label for="lfo-delay-time">DELAY</label>
                         <span class="tooltiptext">MIDI CC 37</span>
+                    </div>
+                    <div class="slider-visual">
+                        <input type="range" id="lfo-delay-time" min="0" max="127" value="0">
+                        <div class="slider-tick" style="top: 11.11%"></div>
+                        <div class="slider-tick" style="top: 22.22%"></div>
+                        <div class="slider-tick" style="top: 33.33%"></div>
+                        <div class="slider-tick" style="top: 44.44%"></div>
+                        <div class="slider-tick" style="top: 55.56%"></div>
+                        <div class="slider-tick" style="top: 66.67%"></div>
+                        <div class="slider-tick" style="top: 77.78%"></div>
+                        <div class="slider-tick" style="top: 88.89%"></div>
                     </div>
                 </div>
             </div>
@@ -334,78 +328,58 @@
 
         <div class="control-box vcf-box">
             <h3>VCF</h3>
-            <div class="pot-grid">
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="vcf-cutoff" class="pot-input" min="0" max="127" value="80">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="vcf-cutoff-indicator"></div>
-                            <div class="pot-tick" style="transform: rotate(130deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(0deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-130deg) translateY(-16px)"></div>
-                        </div>
-                    </div>
+            <div class="vertical-sliders">
+                <div class="parameter-row">
                     <div class="tooltip">
                         <label for="vcf-cutoff">CUTOFF</label>
                         <span class="tooltiptext">MIDI CC 44</span>
                     </div>
+                    <div class="slider-visual">
+                        <input type="range" id="vcf-cutoff" min="0" max="127" value="80">
+                        <div class="slider-tick" style="top: 11.11%"></div>
+                        <div class="slider-tick" style="top: 22.22%"></div>
+                        <div class="slider-tick" style="top: 33.33%"></div>
+                        <div class="slider-tick" style="top: 44.44%"></div>
+                        <div class="slider-tick" style="top: 55.56%"></div>
+                        <div class="slider-tick" style="top: 66.67%"></div>
+                        <div class="slider-tick" style="top: 77.78%"></div>
+                        <div class="slider-tick" style="top: 88.89%"></div>
+                    </div>
                 </div>
 
-                <div></div>
-
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="vcf-lfo-modulation" class="pot-input" min="0" max="127" value="0">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="vcf-lfo-modulation-indicator"></div>
-                            <div class="pot-tick" style="transform: rotate(130deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(0deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-130deg) translateY(-16px)"></div>
-                        </div>
-                    </div>
+                <div class="parameter-row">
                     <div class="tooltip">
                         <label for="vcf-lfo-modulation">LFO MOD</label>
                         <span class="tooltiptext">MIDI CC 48</span>
                     </div>
+                    <div class="slider-visual">
+                        <input type="range" id="vcf-lfo-modulation" min="0" max="127" value="0">
+                        <div class="slider-tick" style="top: 11.11%"></div>
+                        <div class="slider-tick" style="top: 22.22%"></div>
+                        <div class="slider-tick" style="top: 33.33%"></div>
+                        <div class="slider-tick" style="top: 44.44%"></div>
+                        <div class="slider-tick" style="top: 55.56%"></div>
+                        <div class="slider-tick" style="top: 66.67%"></div>
+                        <div class="slider-tick" style="top: 77.78%"></div>
+                        <div class="slider-tick" style="top: 88.89%"></div>
+                    </div>
                 </div>
 
-                <div class="pot-parameter-row">
-                    <div class="pot-container">
-                        <input type="range" id="vcf-envelope-modulation" class="pot-input" min="0" max="127" value="64">
-                        <div class="pot-visual">
-                            <div class="pot-indicator" id="vcf-envelope-modulation-indicator"></div>
-                            <div class="pot-tick" style="transform: rotate(130deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(0deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-26deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-52deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-78deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-104deg) translateY(-16px)"></div>
-                            <div class="pot-tick" style="transform: rotate(-130deg) translateY(-16px)"></div>
-                        </div>
-                    </div>
+                <div class="parameter-row">
                     <div class="tooltip">
                         <label for="vcf-envelope-modulation">ENV MOD</label>
                         <span class="tooltiptext">MIDI CC 45</span>
+                    </div>
+                    <div class="slider-visual">
+                        <input type="range" id="vcf-envelope-modulation" min="0" max="127" value="64">
+                        <div class="slider-tick" style="top: 11.11%"></div>
+                        <div class="slider-tick" style="top: 22.22%"></div>
+                        <div class="slider-tick" style="top: 33.33%"></div>
+                        <div class="slider-tick" style="top: 44.44%"></div>
+                        <div class="slider-tick" style="top: 55.56%"></div>
+                        <div class="slider-tick" style="top: 66.67%"></div>
+                        <div class="slider-tick" style="top: 77.78%"></div>
+                        <div class="slider-tick" style="top: 88.89%"></div>
                     </div>
                 </div>
             </div>
@@ -431,7 +405,7 @@
             </div>
         </div> -->
 
-        <div class="control-box">
+        <div class="control-box envelope-box">
             <h3>ENVELOPE</h3>
 
             <div class="vertical-sliders">
@@ -525,13 +499,14 @@
         <p>This software is provided as-is, without warranty of any kind. Use at your own risk. <a href="privacy.html">Privacy &amp; Cookies</a></p>
     </div>
     
-    <div id="version-number">v1.01</div>
+    <div id="version-number">v1.02</div>
 
     <div id="about-modal" class="modal-hidden" aria-hidden="true">
         <div id="about-modal-content" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
             <button id="about-modal-close" aria-label="Close info popup">&times;</button>
             <p id="about-modal-title">JT Mini MIDI Editor</p>
-            <p>Version 1.01</p>
+            <p>Version 1.02</p>
+            <p>1.02 - graphics update. PRO VS link.</p>
             <p>1.01 - changed other editor link</p>
             <p>1.0 - initial realease</p>
             <p>Created for Behringer JT Mini Synthesizer</p>
