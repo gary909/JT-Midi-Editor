@@ -180,6 +180,19 @@ p {
     color: #EBA85B;
 }
 
+@keyframes synth-spin-3d {
+    from { transform: perspective(400px) rotateY(0deg); }
+    to   { transform: perspective(400px) rotateY(360deg); }
+}
+
+.about-modal-synth-img {
+    width: 180px;
+    margin: 10px auto;
+    display: block;
+    opacity: 0.85;
+    animation: synth-spin-3d 6s linear infinite;
+}
+
 #controls a {
     color: #EBA85B;
     text-decoration: none;
